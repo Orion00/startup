@@ -29,4 +29,6 @@ TODO:
 
 DB should store campaign log and chaos bag in Campaign folder. Last played date and time and notepad should be per player.
 
+
 > "You cast the spell, that makes you the witch" -Frida
+
