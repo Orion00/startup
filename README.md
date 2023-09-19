@@ -20,20 +20,26 @@ List randomizer
 ![List page](/Images/Mockup/RandomList.png)
 
 ### Key Features
--Last played time and date
--Random Arkham joke/meme each login
--Drink pointer outer
--Chaos Bag Puller 
--Campaign Log
--Notepad for new deck ideas and "remember that..." prompts
--Randomly select Location/Item from a list
--Deckbuilding hopefully (Grabbing DB from someone who has scanned all 2,000 cards)
+- Last played time and date
+- Random Arkham joke/meme each login
+- Drink pointer outer
+- Chaos Bag Puller 
+- Campaign Log
+- Notepad for new deck ideas and "remember that..." prompts
+- Randomly select Location/Item from a list
+- Deckbuilding hopefully (Grabbing DB from someone who has scanned all 2,000 cards)
 
 ### Technologies Used
-**HTML:** 
+**HTML:** Builds the 6 HTML pages needed, with hyperlinks on each page to lead to each other page
+
 **CSS:** Used to display well on different screen sizes, freshens up appearance
+
 **JS:** Allows login, editing chaos bag, campaign log, and notepad
+
 **Authentication:** Users login to access preferences and personal features
+
 **Database data:** User's last played time and date, user's last chaos bag setup, user's last campaign log, and user's notepad are all saved on a database.
+
 **WebSocket:** Random Arkham joke/meme displayed at login
+
 **React:** Used for simpler website building
