@@ -40,6 +40,6 @@ List randomizer
 
 **Database data:** User's last played time and date, user's last chaos bag setup, user's last campaign log, and user's notepad are all saved on a database.
 
-**WebSocket:** Random Arkham joke/meme displayed at login
+**WebSocket:** Sends a notifcation to other users when someone else logs on
 
 **React:** Used for simpler website building

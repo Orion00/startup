@@ -6,7 +6,9 @@ Anyone curious about my startup should checkout the [README](README.md)
 
 http://35.171.205.9/
 
-ssh -i ~/keys/production.pem ubuntu@35.171.205.9/
+ssh -i ~/keys/production.pem ubuntu@35.171.205.9
+
+scp -i ~/keys/production.pem [file to be copied] ubuntu@35.171.205.9:/public_html/[file to be copied]
 
 Startup Features:
 -Random joke
