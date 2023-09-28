@@ -4,11 +4,17 @@ Even though I have my notes in a seperate doc. Maybe someday I'll switch over.
 
 Anyone curious about my startup should checkout the [README](README.md)
 
+#IP for the startup
 http://35.171.205.9/
 
+#SSH
 ssh -i ~/keys/production.pem ubuntu@35.171.205.9
 
+#Copy files
 scp -i ~/keys/production.pem [file to be copied] ubuntu@35.171.205.9:/public_html/[file to be copied]
+
+#Deploy (simon or startup) (run in directory of what you want copied)
+./deployFiles.sh -k ~/keys/production.pem -h tinyproject.click -s simon
 
 Startup Features:
 -Random joke
@@ -28,6 +34,7 @@ Startup Features:
 
 TODO:
 -Photograph Colin's hand or get a Cthulhu tentacle as a hand
+-Get a better favicon (crop CthulhuBusiness? Have Phoenix or I draw one?)
 
 DB should store campaign log and chaos bag in Campaign folder. Last played date and time and notepad should be per player.
 

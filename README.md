@@ -7,17 +7,17 @@ Have you ever wanted an extra hand while playing Fantasy Flight's Arkham Horror:
 
 ### Design
 Homepage
-![Homepage](/Images/Mockup/Home.png)
+![Homepage](/Assets/Mockup/Home.png)
 Chaos token bag
-![Chaos bag](/Images/Mockup/ChaosBag.png)
+![Chaos bag](/Assets/Mockup/ChaosBag.png)
 Drink finder
-![Drink pointer](/Images/Mockup/DrinkPointer.png)
+![Drink pointer](/Assets/Mockup/DrinkPointer.png)
 Campaign Log
-![Campaign log](/Images/Mockup/CampaignLog.png)
+![Campaign log](/Assets/Mockup/CampaignLog.png)
 Notepad
-![Notepad](/Images/Mockup/Notepad.png)
+![Notepad](/Assets/Mockup/Notepad.png)
 List randomizer
-![List page](/Images/Mockup/RandomList.png)
+![List page](/Assets/Mockup/RandomList.png)
 
 ### Key Features
 - Last played time and date
@@ -40,6 +40,6 @@ List randomizer
 
 **Database data:** User's last played time and date, user's last chaos bag setup, user's last campaign log, and user's notepad are all saved on a database.
 
-**WebSocket:** Sends a notifcation to other users when someone else logs on
+**WebSocket:** Sends a notification to other users when someone else logs on
 
 **React:** Used for simpler website building
