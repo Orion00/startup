@@ -43,3 +43,17 @@ List randomizer
 **WebSocket:** Sends a notification to other users when someone else logs on
 
 **React:** Used for simpler website building
+
+### HTML Deliverables
+
+TODO: Update this to be for my project
+
+For this deliverable I built out the structure of my application using HTML.
+
+**HTML pages:** One page for each function of the website. Home page, 3 randomizers (Chaos bag, drink finder, and random list), and 2 notes pages (Campaign log and notes)
+**Links:** The home page links to each other page, the rest have a head that contains a navigation bar.
+**Text:** Not a ton of straight text, most of it is contained on the home page
+**Images:** Static images for now, but I want to swap them out based on the theme a user has chosen (for example, in Chaos bag)
+**Login:** Login is available in the header on each page
+**Database:** Database will store last time visited, preferred theme, and notes. Static text exists there for now.
+**WebSocket:** Header will display when someone else logs on. Static text exists there for now.
