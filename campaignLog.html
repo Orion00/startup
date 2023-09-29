@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>ArkhamHand</title>
+        <link rel="icon" href="CthulhuBusiness.ico" />
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+    <header style="background-color: #57ba68;">
+        <p>UserXXXX - Last Login</p>
+        <form method="get" action="play.html">
+            <label for="name">Username</label>
+            <input type="text" id="username"/>
+            <br>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="varPassword" />
+            <button type="submit">Login</button>
+          </form>
+
+        <nav>
+          <menu class="navigation">
+            <li><a href="index.html" class="navigationList">Home</a></li>
+            <li><a href="chaosBag.html" class="navigationList">Chaos Token</a></li>
+            <li><a href="drinkPointer.html" class="navigationList">Drinks</a></li>
+            <li><a href="campaignLog.html" class="navigationList">Campaign Log</a></li>
+            <li><a href="notes.html" class="navigationList">Notes</a></li>
+            <li><a href="randomList.html" class="navigationList">Random List</a></li>
+          </menu>
+        </nav>
+        <p>UserYYYY just logged in</p>
+        <hr />
+
+      </header>
+  
+      <main>
+        <!-- Save Campaigns and Investigators -->
+        <!-- Get dropdown to change what's selected -->
+        <div class="dropdown">
+            <button class="dropbtn">Campaign</button>
+            <div class="dropdown-content">
+              <a href="#">Carcosa - Investigators</a>
+              <a href="#">Dunwich - Investigators</a>
+              <a href="#">Edge of the Earth - Investigators</a>
+            </div>
+          </div>
+
+          <!-- Better to use select drop down over divs? -->
+          <!-- <label for="select">Select: </label>
+        <select id="select" name="varSelect">
+          <option>option1</option>
+          <option selected>option2</option>
+          <option>option3</option>
+        </select> -->
+          <br> <br>
+        <textarea id="textarea" name="varTextarea"></textarea>
+        <br>
+        <button>Save Changes</button>
+        <button>Cancel</button>
+        <br>
+        <button>Add New Campaign</button>
+        <button>Edit Campaign/Investigators</button>
+    </main>
+  
+      <footer>
+        <hr />
+        <span class="text-reset">Author Name: Orion Bowers</span>
+        <br>
+        <a href="https://github.com/Orion00/startup">GitHub</a>
+        </br>
+        <a href="https://orion00.github.io/tinyproject/about/">Image Credits</a>   
+      </footer>
+    </body>
+</html>
