@@ -1,4 +1,8 @@
-/* I'll be cleaning and consolidating this during CSS week, but for now I just wanted something in here */
+body {
+  display: flex;
+  flex-direction: column;
+  min-width: 375px;
+}
 
 .navigation {
     list-style-type: none;
@@ -87,3 +91,4 @@
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: #3e8e41;}
+
