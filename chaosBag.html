@@ -1,71 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <head>
         <title>ArkhamHand</title>
         <link rel="icon" href="CthulhuBusiness.ico" />
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <link rel="stylesheet" href="styles.css">
     </head>
-    <body>
-    <header style="background-color: #57ba68;">
-        <p>UserXXXX - Last Login</p>
-        <form method="get" action="play.html">
-            <label for="name">Username</label>
-            <input type="text" id="username"/>
-            <br>
-            <label for="password">Password</label>
-            <input type="password" id="password" name="varPassword" />
-            <button type="submit">Login</button>
-          </form>
-
-        <nav>
-          <menu class="navigation">
-            <li><a href="index.html" class="navigationList">Home</a></li>
-            <li><a href="chaosBag.html" class="navigationList">Chaos Token</a></li>
-            <li><a href="drinkPointer.html" class="navigationList">Drinks</a></li>
-            <li><a href="campaignLog.html" class="navigationList">Campaign Log</a></li>
-            <li><a href="notes.html" class="navigationList">Notes</a></li>
-            <li><a href="randomList.html" class="navigationList">Random List</a></li>
-          </menu>
-        </nav>
-        <p>UserYYYY just logged in</p>
-        <hr />
-
-      </header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Arkham Hand</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Chaos Bag</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="drinkPointer.html">Drinks</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="campaignLog.html">Campaign Log</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="notes.html">Notes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="randomList.html">Random List</a>
+          </li>          
+        </ul>
+      </div>
+    </nav>
   
-      <main>
-        <!-- Beef up button size and make look nicer -->
-       <div class="flex-parent jc-center">
-            <button>Pull a token</button>
+      <main class="container-fluid bg-secondary">
+        <div class="container bg-light align-items-center">
+          <div class="row">
+            <div class="col-lg text-center">
+              <button type="button" class="btn btn-success btn-lg">Pull a token</button>
+            </div>
+          </div>
+
+          <div class="row align-items-center">
+            <div class="col-sm">
+              <img class="meme" src="/Assets/Chaos Bag/Bag1b.png">
+            </div>
+          </div>
+            <div class="row align-items-center">
+              <div class="col-sm">
+                <button>Stir the Bag</button> 
+              </div>
+              <div class="col-sm">
+                <button>Add a Token</button>
+              </div>
+              <div class="col-sm">
+                <button>Remove a Token</button>
+              </div>
+            </div>
+
+            <div class="row align-items-center">
+              <div class="col-sm">
+                <p>Bag Contents</p>
+                <canvas id="canvasDemo" style="border: 1px solid #000000"></canvas>
+                <script>
+                const ctx = document.getElementById('canvasDemo').getContext('2d');
+                ctx.beginPath();
+                ctx.arc(150, 100, 50, 0, 2 * Math.PI);
+                ctx.fillStyle = 'aqua';
+                ctx.strokeStyle = 'blue';
+                ctx.fill();
+                ctx.stroke();
+                </script>
+              </div>
+
+
+      </div>
+
+    </div>
+
+
         </div>
         <!-- Find new hat (per theme) -->
-        <img src="/Assets/Core/Hat.jpg" style="width:30%; rotate: 180deg;" class="center">
+        
         <br>
 
         <!-- Code these to do something and animate a token moving or the hand stirring behind the hat -->
-        <button>Stir the Bag</button>
-        <button>Add a Token</button>
-        <button>Remove a Token</button>
+
         <!-- Likely make this a canvas of images (one for each number) -->
-        <p>Bag Contents</p>
-        <canvas id="canvasDemo" width="1200" height="200" style="border: 1px solid #000000"></canvas>
-        <script>
-        const ctx = document.getElementById('canvasDemo').getContext('2d');
-        ctx.beginPath();
-        ctx.arc(150, 100, 50, 0, 2 * Math.PI);
-        ctx.fillStyle = 'aqua';
-        ctx.strokeStyle = 'blue';
-        ctx.fill();
-        ctx.stroke();
-        </script>
+
     </main>
   
-      <footer>
-        <hr />
-        <span class="text-reset">Author Name: Orion Bowers</span>
-        <br>
-        <a href="https://github.com/Orion00/startup">GitHub</a>
-        </br>
-        <a href="credits.html" class="navigationList">Image Credits</a> 
-      </footer>
-    </body>
+    <footer>
+      <div class="row bg-success text-white align-items-center text-center">
+        <div class="col-sm">
+          Created by Orion Bowers
+        </div>
+        <div class="col-sm">
+          <a class="nav-link" href="https://github.com/Orion00/startup">GitHub</a>
+        </div>
+        <div class="col-sm">
+          <a class="nav-link" href="credits.html" class="navigationList">Image Credits</a>
+        </div>
+      </div>        
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+  </body>
 </html>

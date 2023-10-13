@@ -61,7 +61,8 @@
 }
 
 .meme {
-  width: 40%;
+  width: 75%;
+  max-width: 350px;
 }
 
 .bullet_link {
