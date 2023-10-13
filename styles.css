@@ -1,44 +1,6 @@
-body {
-  display: flex;
-  flex-direction: column;
-  min-width: 375px;
-}
 
-.navigation {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 100px;
-    background-color: #93d9a7;
-  }
 
-  li a.navigationList {
-    display: block;
-    padding: 16px 16px;
-    text-decoration: none;
-    text-align: center;
-    border: 1px solid #555;
-  }
 
-  li a:hover {
-    background-color: #1c6e20;
-  }
-
-  /* Get active link to be different
-  .active {
-    background-color: #04AA6D;
-    color: white;
-  } */
-
-  .center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .meme {
-    width: 20%;
-  }
 
   /* Chaos Bag specific */
   .flex-parent {
@@ -92,3 +54,17 @@ body {
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: #3e8e41;}
 
+
+/* Orion's New Stuff */
+.bullet {
+  width: 20%;
+}
+
+.meme {
+  width: 40%;
+}
+
+.bullet_link {
+  display: inline;
+  color: seagreen;
+}
