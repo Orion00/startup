@@ -47,36 +47,38 @@
             </div>
           </div>
 
-          <div class="row align-items-center">
+          <div class="row">
+            <div class="col-lg text-center">
+              <img class="meme" src="/Assets/Themes/generic/GenericGrab.png">
+            </div>
+          </div>
+
+          <div class="row align-items-center text-center">
             <div class="col-sm">
               <img class="meme" src="/Assets/Chaos Bag/Bag1b.png">
             </div>
           </div>
-            <div class="row align-items-center">
-              <div class="col-sm">
-                <button>Stir the Bag</button> 
+            <div class="row align-items-center text-center">
+              <div class="col-lg">
+                <button class="btn btn-success">Stir Bag</button> 
+                <button class="btn btn-success">Add Token</button>
+                <button class="btn btn-danger">Remove Token</button>
               </div>
-              <div class="col-sm">
-                <button>Add a Token</button>
-              </div>
-              <div class="col-sm">
-                <button>Remove a Token</button>
-              </div>
+
             </div>
 
             <div class="row align-items-center">
               <div class="col-sm">
-                <p>Bag Contents</p>
-                <canvas id="canvasDemo" style="border: 1px solid #000000"></canvas>
-                <script>
-                const ctx = document.getElementById('canvasDemo').getContext('2d');
-                ctx.beginPath();
-                ctx.arc(150, 100, 50, 0, 2 * Math.PI);
-                ctx.fillStyle = 'aqua';
-                ctx.strokeStyle = 'blue';
-                ctx.fill();
-                ctx.stroke();
-                </script>
+                <img class="token" src="/Assets/Chaos Bag/Elder Sign.png">
+                <img class="token" src="/Assets/Chaos Bag/Autofail.png">
+                <img class="token" src="/Assets/Chaos Bag/1.png">
+                <img class="token" src="/Assets/Chaos Bag/0.png">
+                <img class="token" src="/Assets/Chaos Bag/minus1.png">
+                <img class="token" src="/Assets/Chaos Bag/minus2.png">
+                <img class="token" src="/Assets/Chaos Bag/minus3.png">
+                <img class="token" src="/Assets/Chaos Bag/minus4.png">
+                <img class="token" src="/Assets/Chaos Bag/cultist.png">
+                <img class="token" src="/Assets/Chaos Bag/cultist.png">
               </div>
 
 
@@ -88,7 +90,6 @@
         </div>
         <!-- Find new hat (per theme) -->
         
-        <br>
 
         <!-- Code these to do something and animate a token moving or the hand stirring behind the hat -->
 
