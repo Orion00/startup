@@ -46,14 +46,34 @@ List randomizer
 
 ### HTML Deliverables
 
-TODO: Update this to be for my project
-
 For this deliverable I built out the structure of my application using HTML.
 
 **HTML pages:** One page for each function of the website. Home page, 3 randomizers (Chaos bag, drink finder, and random list), and 2 notes pages (Campaign log and notes)
+
 **Links:** The home page links to each other page, the rest have a head that contains a navigation bar.
+
 **Text:** Not a ton of straight text, most of it is contained on the home page
+
 **Images:** Static images for now, but I want to swap them out based on the theme a user has chosen (for example, in Chaos bag)
+
 **Login:** Login is available in the header on each page
+
 **Database:** Database will store last time visited, preferred theme, and notes. Static text exists there for now.
+
 **WebSocket:** Header will display when someone else logs on. Static text exists there for now.
+
+### CSS Deliverables
+
+For this deliverable I used primarily bootstrap to make the website worth looking at for more than 10 seconds.
+
+**Header, footer, and main content body** It exists and is consistent
+
+**Navigation elements** I changed the color for my one link, and built a nav bar at the top. Unfortunately I think it needs JS when it resizes so the menu doesn't drop down yet.
+
+**Responsive to window resizing** Website designed to fit well on phones and monitors
+
+**Application elements** Used consistent colors and a theme
+
+**Application text content** No change to default bootstrap fonts, I'll add this later if I have time
+
+**Application images** Plenty of images, all responsive to screen size
