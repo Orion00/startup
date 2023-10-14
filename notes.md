@@ -1,6 +1,6 @@
 # These are apparently my 260 notes
 
-Even though I have my notes in a seperate doc. Maybe someday I'll switch over.
+Even though I have my notes in a separate doc. Maybe someday I'll switch over.
 
 Anyone curious about my startup should checkout the [README](README.md)
 
@@ -15,6 +15,7 @@ scp -i ~/keys/production.pem [file to be copied] ubuntu@35.171.205.9:/public_htm
 
 #Deploy (simon or startup) (run in directory of what you want copied)
 ./deployFiles.sh -k ~/keys/production.pem -h tinyproject.click -s simon
+./deployFiles.sh -k ~/keys/production.pem -h tinyproject.click -s startup
 
 Startup Features:
 -Random joke
@@ -33,7 +34,8 @@ Startup Features:
 -Deckbuilding eventually (stealing DB from someone who has scanned all 2,000 cards)
 
 TODO:
--Photograph Colin's hand or get a Cthulhu tentacle as a hand
+-Add all images for themes
+-Make cursor change for theme
 -Get a better favicon (crop CthulhuBusiness? Have Phoenix or I draw one?)
 
 DB should store campaign log and chaos bag in Campaign folder. Last played date and time and notepad should be per player.

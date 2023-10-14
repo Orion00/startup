@@ -79,17 +79,19 @@
   -webkit-animation: pulltoken 3s infinite  alternate;
   animation: pulltoken 3s infinite  alternate;
 }
+@keyframes mover {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(100px); }
+}
 
 @-webkit-keyframes pulltoken {
   0% { transform: translateY(0); }
   100% { transform: translateY(100px); }
 }
 
-@keyframes mover {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(100px); }
+.imagecredit {
+  max-width: 200px;
 }
-
 .point {
   animation: spin 2.5s;
   animation-name: spin;
