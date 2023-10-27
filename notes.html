@@ -55,24 +55,23 @@
             <label for="notes1">Notepad 1</label>
             <textarea class="form-control" id="notes1" rows="3"></textarea>
           </div>
-          <button type="submit" class="btn btn-success">Save</button>
-          <button type="submit" class="btn btn-danger">Clear</button>
+          <button type="submit" class="btn btn-success save">Save</button>
+          <button type="submit" class="btn btn-danger clear">Clear</button>
         </div>
         <div class="col-lg text-center" onclick=deleteElement(event)>
           <div class="form-group">
             <label for="notes2">Notepad 2</label>
             <textarea class="form-control" id="notes2" rows="3"></textarea>
           </div>
-          <button type="submit" class="btn btn-success">Save</button>
-          <button type="submit" class="btn btn-danger">Clear</button>
+          <button type="submit" class="btn btn-success save">Save</button>
+          <button type="submit" class="btn btn-danger clear">Clear</button>
         </div>
       </div>
 
       <div class="row">
         <div class="col-sm text-center">
           <button type="submit" class="btn btn-success" onclick="addNote()">Add Notepad</button>
-          <button type="submit" class="btn btn-danger" id="deleteButton" onclick="toggleDeleteMode()">Remove Notepad</button>
-          <button type="submit" class="btn btn-success">Rename Notepad</button>
+          <button type="submit" class="btn btn-danger" id="deleteButton">Remove Notepad</button>
         </div>
       </div>
 
