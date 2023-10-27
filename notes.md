@@ -39,6 +39,14 @@ TODO:
 -Get a better favicon (crop CthulhuBusiness? Have Phoenix or I draw one?)
 -Find new font family
 -Make the active page darker on nav bar
+(JS)
+-Save username in local cache
+-Fix nav bar
+-Click on pointer to spin again
+-Move token grabber with button
+-Stir the bag animation
+-Create new tokens with button (drop down selection)
+-Create new notepads (and set global var of 3)
 
 DB should store campaign log and chaos bag in Campaign folder. Last played date and time and notepad should be per player.
 
