@@ -24,16 +24,8 @@
 .imagecredit {
   max-width: 200px;
 }
+
 .point {
-  animation: spin 2.5s;
-  animation-name: spin;
+  transform-origin: center;
 }
 
-@keyframes spin {
-    from {
-        transform:rotate(0deg);
-    }
-    to {
-        transform:rotate(460deg);
-    }
-}

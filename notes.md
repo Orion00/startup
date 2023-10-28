@@ -41,7 +41,7 @@ TODO:
 -Make the active page darker on nav bar
 (JS)
 -Save username in local cache
--Click on pointer to spin again
+-(Drink Pointer) Protect the spin from being spammed. Generated a 0 and that causes crashes?
 -(Chaos Bag) Save token bag in local cache/database
 -(Chaos Bag) Actually pull a token out
 -(Index) Theme change (local cache save theme name and then assets look to that)
