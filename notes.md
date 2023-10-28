@@ -45,9 +45,10 @@ TODO:
 -Click on pointer to spin again
 -Move token grabber with button
 -Stir the bag animation
--Create new tokens with button (drop down selection)
--(Notes) Make a click not on a div clear edit and delete modes
--(Notes) Char limit to renaming
+-(ChaosBag) Create new tokens with button (drop down selection)
+-(Chaos Bag) Save token bag in local cache/database
+-(Index) Theme change (local cache save theme name and then assets look to that)
+-(Notes) Char limit to renaming note pads
 -(Notes) Connect clear and save buttons to database
 
 DB should store campaign log and chaos bag in Campaign folder. Last played date and time and notepad should be per player.
