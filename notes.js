@@ -137,7 +137,6 @@ function saveContent(event) {
     const formGroup = event.target.previousElementSibling;
     const formGroupText = formGroup.querySelector('[id^="notes"]');
 
-
     if (formGroupText) {
         // If the sibling element exists, perform the necessary actions
         // For example, you can modify or manipulate the sibling element

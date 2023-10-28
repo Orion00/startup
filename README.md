@@ -77,3 +77,16 @@ For this deliverable I used primarily bootstrap to make the website worth lookin
 **Application text content** No change to default bootstrap fonts, I'll add this later if I have time
 
 **Application images** Plenty of images, all responsive to screen size
+
+### JS Deliverables
+
+I added functionality to almost all the buttons (still working on campaign notes add and remove campaign) and prepped for database usage.
+(Liberal use of ChatGPT to debug and learn how to write functions. It's far better at documenting code than I am)
+
+**Future Login** I've got a login box that saves username and password in session storage for now. Don't know how to check against database yet.
+
+**Future Database Data** Currently console.logging all information other than username and password I'd like to save besides the campaigns page, where it's stored in local storage.
+
+**Future Websocket** "User####" text on homepage currently generates a random username every 2-4 seconds. I plan to have only the most recent logged on user show up.
+
+**Interaction Logic** Buttons animate, save, clear, randomize, and anything else advertised. Still working out a few kinks on spin and pull token. Notepad names are editable.

@@ -40,6 +40,7 @@ TODO:
 -Find new font family
 -Make the active page darker on nav bar
 (JS)
+-(Campaign Log) Finish other 3 buttons
 -Save username in local cache
 -(Drink Pointer) Protect the spin from being spammed. Generated a 0 and that causes crashes?
 -(Chaos Bag) Save token bag in local cache/database
