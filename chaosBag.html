@@ -52,16 +52,52 @@
           </div>
             <div class="row align-items-center text-center">
               <div class="col-lg">
-                <button class="btn btn-success">Stir Bag</button> 
-                <button class="btn btn-success">Add Token</button>
-                <button class="btn btn-danger">Remove Token</button>
-              </div>
+                <button class="btn btn-secondary" onclick=stirBag()>Stir Bag</button> 
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#chaosselector">
+                  Add Token
+                </button>
+                
+                <!-- Modal -->
+                <div class="modal fade" id="chaosselector" tabindex="-1" aria-labelledby="chaosselector" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Select a token</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="col-sm">
+                          <img class="token" src="/Assets/Chaos Bag/Elder Sign.png" data-bs-dismiss="modal" onclick=addToken(this)>
+                          <img class="token" src="/Assets/Chaos Bag/Autofail.png" data-bs-dismiss="modal" onclick=addToken(this)>
+                          <img class="token" src="/Assets/Chaos Bag/1.png" data-bs-dismiss="modal" onclick=addToken(this)>
+                          <img class="token" src="/Assets/Chaos Bag/0.png" data-bs-dismiss="modal" onclick=addToken(this)>
+                          <img class="token" src="/Assets/Chaos Bag/minus1.png" data-bs-dismiss="modal" onclick=addToken(this)>
+                          <img class="token" src="/Assets/Chaos Bag/minus2.png" data-bs-dismiss="modal" onclick=addToken(this)>
+                          <img class="token" src="/Assets/Chaos Bag/minus3.png" data-bs-dismiss="modal" onclick=addToken(this)>
+                          <img class="token" src="/Assets/Chaos Bag/minus4.png" data-bs-dismiss="modal" onclick=addToken(this)>
+                          <img class="token" src="/Assets/Chaos Bag/minus5.png" data-bs-dismiss="modal" onclick=addToken(this)>
+                          <img class="token" src="/Assets/Chaos Bag/minus6.png" data-bs-dismiss="modal" onclick=addToken(this)>
+                          <img class="token" src="/Assets/Chaos Bag/minus7.png" data-bs-dismiss="modal" onclick=addToken(this)>
+                          <img class="token" src="/Assets/Chaos Bag/minus8.png" data-bs-dismiss="modal" onclick=addToken(this)>
+                          <img class="token" src="/Assets/Chaos Bag/skull.png" data-bs-dismiss="modal" onclick=addToken(this)>
+                          <img class="token" src="/Assets/Chaos Bag/cultist.png" data-bs-dismiss="modal" onclick=addToken(this)>
+                          <img class="token" src="/Assets/Chaos Bag/tablet.png" data-bs-dismiss="modal" onclick=addToken(this)>
+                          <img class="token" src="/Assets/Chaos Bag/elderthing.png" data-bs-dismiss="modal" onclick=addToken(this)>
+                          <img class="token" src="/Assets/Chaos Bag/bless.png" data-bs-dismiss="modal" onclick=addToken(this)>
+                          <img class="token" src="/Assets/Chaos Bag/curse.png" data-bs-dismiss="modal" onclick=addToken(this)>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <button class="btn btn-danger" id="deleteButton" onclick=toggleDeleteMode()>Remove Token</button>
 
             </div>
 
             <div class="row align-items-center">
               <div class="col-sm bag">
-                <img class="token" src="/Assets/Chaos Bag/Elder Sign.png">
+                <!-- <img class="token" src="/Assets/Chaos Bag/Elder Sign.png" onclick=removeToken()>
                 <img class="token" src="/Assets/Chaos Bag/Autofail.png">
                 <img class="token" src="/Assets/Chaos Bag/1.png">
                 <img class="token" src="/Assets/Chaos Bag/0.png">
@@ -70,21 +106,14 @@
                 <img class="token" src="/Assets/Chaos Bag/minus3.png">
                 <img class="token" src="/Assets/Chaos Bag/minus4.png">
                 <img class="token" src="/Assets/Chaos Bag/cultist.png">
-                <img class="token" src="/Assets/Chaos Bag/cultist.png">
+                <img class="token" src="/Assets/Chaos Bag/cultist.png"> -->
               </div>
-
-
       </div>
       <br>
     </div>
 
 
         <!-- Find new hat (per theme) -->
-        
-
-        <!-- Code these to do something and animate a token moving or the hand stirring behind the hat -->
-
-        <!-- Likely make this a canvas of images (one for each number) -->
 
     </main>
   

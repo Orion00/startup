@@ -21,20 +21,6 @@
   max-width: 70px;
 }
 
-.hand {
-  -webkit-animation: pulltoken 3s infinite  alternate;
-  animation: pulltoken 3s infinite  alternate;
-}
-@keyframes pulltoken {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(100px); }
-}
-
-@-webkit-keyframes pulltoken {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(100px); }
-}
-
 .imagecredit {
   max-width: 200px;
 }

@@ -41,12 +41,9 @@ TODO:
 -Make the active page darker on nav bar
 (JS)
 -Save username in local cache
--Fix nav bar
 -Click on pointer to spin again
--Move token grabber with button
--Stir the bag animation
--(ChaosBag) Create new tokens with button (drop down selection)
 -(Chaos Bag) Save token bag in local cache/database
+-(Chaos Bag) Actually pull a token out
 -(Index) Theme change (local cache save theme name and then assets look to that)
 -(Notes) Char limit to renaming note pads
 -(Notes) Connect clear and save buttons to database
