@@ -1,11 +1,11 @@
+"use strict"
+
 // RANDOMIZE FUNCTIONS
 function randomizeList(event) {
 
     const formGroupText = document.getElementById('randomlist')
 
     if (formGroupText) {
-        // If the sibling element exists, perform the necessary actions
-        // For example, you can modify or manipulate the sibling element
         const result = formGroupText.value.split('\n');
         console.log("Split textarea content",result);
         for (let i = result.length - 1; i > 0; i--) {
@@ -14,7 +14,6 @@ function randomizeList(event) {
         }
         formGroupText.value = result.join('\n')
     } else {
-        // If the sibling element doesn't exist, handle accordingly
         console.log("Error: Randomize Button doesn't work");
     }
 }

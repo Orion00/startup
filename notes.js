@@ -6,7 +6,6 @@ const max_notes = 4;
 let curr_notes = 2;
 // for (let i; i < curr_notes; i++) {
 //     addNote();
-//     console.log("Fighting");
 // }
 
 let delete_mode = false;

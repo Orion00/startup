@@ -29,3 +29,8 @@
   transform-origin: center;
 }
 
+
+.pulled {
+  transform: translate(0%, 125%);
+  visibility: hidden;
+}

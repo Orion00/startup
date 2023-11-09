@@ -1,3 +1,5 @@
+"use strict"
+
 // SAVING USERNAME AND PASSWORD
 document.getElementById('login').addEventListener('submit', function (e) {
     e.preventDefault(); // Prevent form submission
@@ -51,7 +53,7 @@ updateOtherUserText();
 
 // Function to update text at random intervals between 20 and 30 seconds
 function randomizeOtherUserText() {
-    setInterval(updateOtherUserText, Math.floor(2000 + Math.random() * 2000)); // Random interval between 20 and 30 seconds (in milliseconds)
+    setInterval(updateOtherUserText, Math.floor(2000 + Math.random() * 2000));
 }
 
 // Start the interval

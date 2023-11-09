@@ -9,32 +9,40 @@ localStorage.setItem("ChaosContents",JSON.stringify(ChaosContents))
 
 function pullToken() {
     if (animationInProgress) {
-        // If an animation is in progress, do nothing
         return;
     }
-    
     animationInProgress = true;
-    console.log("Animation in progress",animationInProgress)
-    const grabImage = document.querySelector(".hand img");
 
-    // Reset the image to its initial position
-    grabImage.style.transform = "translateY(0)";
+    const oldPulledToken = document.querySelector('.pulled');
+    oldPulledToken.remove();
+    createImg("")
+    const pulledToken = document.querySelector('.pulled');
+    const hand = document.querySelector('.hand');
+    
+    // Get the initial position of the hand
+    const initialHandPosition = hand.getBoundingClientRect().top;
 
+    // Move the hand down
+    hand.style.transition = 'transform 2s ease-in-out';
+    hand.style.transform = 'translateY(150px)';
+
+    // After moving down, move the hand back up
     setTimeout(function () {
-        grabImage.style.transition = "transform 2s ease-in-out";
-        grabImage.style.transform = "translateY(150px)";
+        hand.style.transition = 'transform 2s ease-in-out';
+        hand.style.transform = 'translateY(0)';
 
-        setTimeout(function () {
-            grabImage.style.transition = "transform 2s ease-in-out";
-            grabImage.style.transform = "translateY(0)";
-        }, 2300); // How long to wait before going back up
-    }, 50); // How long to wait before the animation starts
+        // Move the pulled token along with the hand
+        pulledToken.style.visibility = "visible"; // Show the pulled token
+        pulledToken.style.transition = 'transform 2s ease-in-out';
+        pulledToken.style.transform = 'translateY(0)';
+    }, 2000); // Adjust this timing to sync with the hand's animation
 
+    // Reset animation state
     setTimeout(function () {
         animationInProgress = false;
-        console.log("Animation in progress",animationInProgress)    
-    },4500)
+    }, 4000); // Total duration of both up and down animation
 }
+
 
 function stirBag() {
     if (animationInProgress) {
@@ -85,7 +93,6 @@ function stirBag() {
 // SETUP PAGE
 function populateTokens() {
     ChaosContents = JSON.parse(localStorage.getItem("ChaosContents"));
-    console.log(ChaosContents,"a");
     for (const key in ChaosContents) {
         const times = ChaosContents[key];
         for (let i = 0; i < times; i++) {
@@ -106,6 +113,7 @@ function addToken(input) {
     }
     const parentElement = document.querySelector(".bag");
     let nToken = createImg(src);
+    nToken.addEventListener("click", removeToken); // Assuming removeToken is a defined function
     parentElement.appendChild(nToken);
 
 }
@@ -133,8 +141,6 @@ function createImg(src) {
         // Only the image name provided, append it to the path
         el.src = `/Assets/Chaos Bag/${src}.png`;
     }
-
-    el.addEventListener("click", removeToken); // Assuming removeToken is a defined function
     return el;
 }
 

@@ -6,3 +6,8 @@
 /Assets/Progress/
 
 *.vscode/
+
+*/node_modules/
+
+mongo/
+authTest/

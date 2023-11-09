@@ -1,3 +1,5 @@
+"use strict"
+
 // CHANGING SELECTION FUNCTIONS
 const campaignSelector = document.getElementById('campaignSelector');
 const campaignNotes = document.getElementById('campaignnotes');

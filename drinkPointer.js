@@ -6,10 +6,10 @@ function spin() {
     if (!animationInProgress) {
         console.log("SPINNING")
         const image = document.querySelector('.meme');
-        const randomDegree = Math.floor(Math.random() * 360); // Generate a random number between 0 and 360
+        const randomDegree = Math.floor(Math.random() * 360);
 
         image.style.transition = 'transform 1s'; // Smooth transition
-        image.style.transform = `rotate(${randomDegree}deg)`; // Apply the random degree rotation
+        image.style.transform = `rotate(${randomDegree}deg)`;
 
         animationInProgress = true;
 
