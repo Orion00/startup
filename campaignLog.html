@@ -43,15 +43,53 @@
         <div class="col-lg text-center">
           <div class="form-group">
             <select id="campaignSelector" class="form-select col-md" aria-label="Campaign selector">
-                <option value="daisy">The Path to Carcosa - Daisy Walker</option>
-                <option value="mark">Edge of the Earth - Mark Harrigan</option>
+              <!-- Populated with JS -->
             </select>
             <textarea class="form-control" id="campaignnotes" rows="3"></textarea>
         </div>
           <button type="submit" class="btn btn-success save">Save</button>
           <button type="submit" class="btn btn-danger clear">Clear</button>
-          <button type="submit" class="btn btn-dark add">Add campaign</button>
+          <button type="submit" class="btn btn-dark add" data-bs-toggle="modal" data-bs-target="#addModal">Add campaign</button>
           <button type="submit" class="btn btn-secondary remove">Remove campaign</button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="addModal" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="campaignModalLabel">New campaign log</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="mb-3">
+                    <select id="campaignModal" class="form-select col-md" aria-label="Campaign selector">
+                      <option value="Zealot">Night of the Zealot</option>
+                      <option value="Dunwich">The Dunwich Legacy </option>
+                      <option value="Carcosa">The Path to Carcosa</option>
+                      <option value="Forgotten">The Forgotten Age</option>
+                      <option value="Circle">The Circle Undone</option>
+                      <option value="Dream">The Dream Eaters</option>
+                      <option value="Innsmouth">The Innsmouth Conspiracy</option>
+                      <option value="Edge">Edge of the Earth</option>
+                      <option value="Scarlet">Scarlet Keys</option>
+                      <option value="Custom">Custom</option>
+                  </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="investigatorInput" class="col-form-label">Investigator</label>
+                    <input type="text" class="form-control" id="investigatorInput">
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" onclick="addCampaign()" data-bs-dismiss="modal">Add campaign</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         </div>
       </div>
       <br>

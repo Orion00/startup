@@ -41,10 +41,10 @@ TODO:
 -Make the active page darker on nav bar
 (JS)
 -(Campaign Log) Finish other 3 buttons
+-(Campaign Log) Modal checks if investigator name is legal
 -Save username in local cache
 -(Drink Pointer) Protect the spin from being spammed. Generated a 0 and that causes crashes?
 -(Chaos Bag) Save token bag in local cache/database
--(Chaos Bag) Actually pull a token out
 -(Index) Theme change (local cache save theme name and then assets look to that)
 -(Notes) Char limit to renaming note pads
 -(Notes) Connect clear and save buttons to database

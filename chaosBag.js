@@ -9,13 +9,31 @@ localStorage.setItem("ChaosContents",JSON.stringify(ChaosContents))
 
 function pullToken() {
     if (animationInProgress) {
+        // If an animation is in progress, do nothing
+        return;
+    }
+    const parentElement = document.querySelector(".bag");
+    const imgElements = parentElement.getElementsByClassName("token")
+    if (imgElements.length <= 0) {
+        alert("Error: Token bag empty. Add a token to the bag before pulling a token.")
         return;
     }
     animationInProgress = true;
 
+    // Remove old token and create new invisible one
     const oldPulledToken = document.querySelector('.pulled');
-    oldPulledToken.remove();
-    createImg("")
+    if (oldPulledToken) {
+        oldPulledToken.remove();
+    }
+    
+    const randomIndex = Math.floor(Math.random() * imgElements.length);
+    const randomImage = imgElements[randomIndex];
+
+    const tokenSpot = document.querySelector(".token-spot");
+    let nToken = createImg(randomImage.src);
+    nToken.classList.add("pulled");
+    tokenSpot.appendChild(nToken);
+
     const pulledToken = document.querySelector('.pulled');
     const hand = document.querySelector('.hand');
     
@@ -33,8 +51,11 @@ function pullToken() {
 
         // Move the pulled token along with the hand
         pulledToken.style.visibility = "visible"; // Show the pulled token
-        pulledToken.style.transition = 'transform 2s ease-in-out';
-        pulledToken.style.transform = 'translateY(0)';
+        pulledToken.style.transition = "transform 2s ease-in-out, opacity 2s ease-in-out"; // CSS transition for transform and opacity
+        pulledToken.style.transform = "translateY(0)";
+        pulledToken.style.opacity = "1"; // Set opacity to 1 to gradually reveal the token
+        // pulledToken.style.transition = 'transform 2s ease-in-out';
+        // pulledToken.style.transform = 'translateY(0)';
     }, 2000); // Adjust this timing to sync with the hand's animation
 
     // Reset animation state
@@ -48,6 +69,11 @@ function stirBag() {
     if (animationInProgress) {
         // If an animation is in progress, do nothing
         return;
+    }
+
+    const oldPulledToken = document.querySelector('.pulled');
+    if (oldPulledToken) {
+        oldPulledToken.remove();
     }
 
     animationInProgress = true;

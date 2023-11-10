@@ -33,4 +33,5 @@
 .pulled {
   transform: translate(0%, 125%);
   visibility: hidden;
+  opacity: 0;
 }
