@@ -40,14 +40,16 @@ TODO:
 -Find new font family
 -Make the active page darker on nav bar
 (JS)
--(Campaign Log) Finish other 3 buttons
+-(Campaign Log) Switch to new campaign when creating new campaign
+-(Campaign Log) Save when hitting enter
 -(Campaign Log) Modal checks if investigator name is legal
--Save username in local cache
+-(Campaign Log) Fix adding more than 1 duplicate campaign breaks things
 -(Drink Pointer) Protect the spin from being spammed. Generated a 0 and that causes crashes?
--(Chaos Bag) Save token bag in local cache/database
--(Index) Theme change (local cache save theme name and then assets look to that)
+-(Chaos Bag) Make Adding token not jumpy when it doesn't exist (Make it invisible?)
+-(Index) Theme change (local cache save theme name and then manually change every src to use that folder)
 -(Notes) Char limit to renaming note pads
 -(Notes) Connect clear and save buttons to database
+-(Notes) Fix adding more than 1 duplicate notepad name breaks things
 
 DB should store campaign log and chaos bag in Campaign folder. Last played date and time and notepad should be per player.
 

@@ -8,11 +8,6 @@ const campaignSelector = document.getElementById('campaignSelector');
 const campaignNotes = document.getElementById('campaignnotes');
 
 // Initialize or retrieve data from local storage
-// let campaignData = JSON.parse(localStorage.getItem('campaignData')) ||
-// {
-//     'The Path to Carcosa':{'Investigator':'Daisy Walker','Campaign Notes':''},
-//     'Edge of the Earth':{'Investigator':'Mark Harrigan','Campaign Notes':''}
-// };
 let campaignData = JSON.parse(localStorage.getItem('campaignData'))
 
 if (!campaignData || Object.keys(campaignData).length === 0) {

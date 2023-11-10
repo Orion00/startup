@@ -3,9 +3,21 @@
 
 let delete_mode = false;
 let animationInProgress = false;
-let ChaosContents = {"Elder Sign": 1, "Autofail": 1, "0": 1, "1": 1, "bless": 0, "cultist":2, "curse":0, "elderthing":0,"minus1":1,"minus2":2,"minus3":1,"minus4":1,"minus5":0,"minus6":0,"minus7":0,"minus8":0,"skull":1,"tablet":0};
 
-localStorage.setItem("ChaosContents",JSON.stringify(ChaosContents))
+let chaosContents = JSON.parse(localStorage.getItem('chaosContents'))
+
+if (!chaosContents || Object.keys(chaosContents).length === 0) {
+    chaosContents = {"Eldersign": 1, 
+    "Autofail": 1, "0": 1, "1": 1, 
+    "bless": 0, "cultist":2, "curse":0, 
+    "elderthing":0,"minus1":1,"minus2":2,
+    "minus3":1,"minus4":1,"minus5":0,
+    "minus6":0,"minus7":0,"minus8":0,
+    "skull":1,"tablet":0};
+
+    localStorage.setItem('chaosContents', JSON.stringify(chaosContents));
+  }
+
 
 function pullToken() {
     if (animationInProgress) {
@@ -30,7 +42,7 @@ function pullToken() {
     const randomImage = imgElements[randomIndex];
 
     const tokenSpot = document.querySelector(".token-spot");
-    let nToken = createImg(randomImage.src);
+    let nToken = createImg(randomImage.src.split('/').pop().replace('.png', ''));
     nToken.classList.add("pulled");
     tokenSpot.appendChild(nToken);
 
@@ -118,9 +130,9 @@ function stirBag() {
 
 // SETUP PAGE
 function populateTokens() {
-    ChaosContents = JSON.parse(localStorage.getItem("ChaosContents"));
-    for (const key in ChaosContents) {
-        const times = ChaosContents[key];
+    chaosContents = JSON.parse(localStorage.getItem("chaosContents"));
+    for (const key in chaosContents) {
+        const times = chaosContents[key];
         for (let i = 0; i < times; i++) {
             addToken(key);
         }
@@ -135,13 +147,21 @@ function addToken(input) {
     if (typeof(input)=== 'string') {
         src = input
     } else {
-        src = input.src
+        //src = input.src
+        src = input.src.split('/').pop().replace('.png', '')
     }
     const parentElement = document.querySelector(".bag");
     let nToken = createImg(src);
-    nToken.addEventListener("click", removeToken); // Assuming removeToken is a defined function
+    nToken.addEventListener("click", removeToken);
     parentElement.appendChild(nToken);
+    return src  
+}
 
+function addTokenAndIncrement(input) {
+    let src = addToken(input);
+    chaosContents[src] += 1;
+    console.log("Total",src,"is",chaosContents[src]);
+    localStorage.setItem('chaosContents', JSON.stringify(chaosContents));
 }
 
 function removeToken(event) {
@@ -150,6 +170,10 @@ function removeToken(event) {
         const target = event.target;
         target.remove();
         toggleDeleteMode();
+        let src = target.src.split('/').pop().replace('.png', '')
+        chaosContents[src] -= 1;
+        localStorage.setItem('chaosContents', JSON.stringify(chaosContents));
+        console.log("Total",src,"is",chaosContents[src]);
     }
 }
 
@@ -158,15 +182,7 @@ function removeToken(event) {
 function createImg(src) {
     let el = document.createElement('img');
     el.classList.add("token");
-
-    // Check if the input src contains the full path or just the image name
-    if (src.includes('.png')) {
-        // Full path provided
-        el.src = src;
-    } else {
-        // Only the image name provided, append it to the path
-        el.src = `/Assets/Chaos Bag/${src}.png`;
-    }
+    el.src = `/Assets/Chaos Bag/${src}.png`;
     return el;
 }
 
