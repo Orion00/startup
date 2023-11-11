@@ -44,6 +44,7 @@ TODO:
 -(Campaign Log) Save when hitting enter
 -(Campaign Log) Modal checks if investigator name is legal
 -(Campaign Log) Fix adding more than 1 duplicate campaign breaks things
+-(Campaign Log) Add "remove campaign" functionality
 -(Drink Pointer) Protect the spin from being spammed. Generated a 0 and that causes crashes?
 -(Chaos Bag) Make Adding token not jumpy when it doesn't exist (Make it invisible?)
 -(Index) Theme change (local cache save theme name and then manually change every src to use that folder)
