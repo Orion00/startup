@@ -3,24 +3,51 @@
 // SAVING USERNAME AND PASSWORD
 document.getElementById('login').addEventListener('submit', function (e) {
     e.preventDefault(); // Prevent form submission
-
+  
     // Get username and password values
     const username = document.getElementById('name').value;
     const password = document.getElementById('password').value;
-
+  
     // Check if username and password are not empty
     if (username.trim() !== '' && password.trim() !== '') {
-        // Store username and password in session storage
-        sessionStorage.setItem('username', username);
-        sessionStorage.setItem('password', password);
-
-        console.log('Username and password saved to session storage.');
-        updateIdentifier();
+      // Store username and password in session storage
+      const encodedUsername = encodeURIComponent(username);
+      sessionStorage.setItem('username', encodedUsername);
+      //sessionStorage.setItem('password', password);
+  
+      console.log('Username (not password) saved to session storage.');
+      updateIdentifier();
+      getUser(username);
     } else {
-        // Handle if username or password is empty
-        console.log('Please enter both username and password.');
+      // Handle if username or password is empty
+      console.log('Please enter both username and password.');
     }
-});
+  });
+  
+  // CREATE BUTTON
+  document.getElementById('createButton').addEventListener('click', function (e) {
+    e.preventDefault(); // Prevent form submission
+  
+    // Get username and password values
+    const username = document.getElementById('name').value;
+    const password = document.getElementById('password').value;
+  
+    // Check if username and password are not empty
+    if (username.trim() !== '' && password.trim() !== '') {
+      // Store username and password in session storage
+      const encodedUsername = encodeURIComponent(username);
+      sessionStorage.setItem('username', encodedUsername);
+      //sessionStorage.setItem('password', password);
+  
+      console.log('User created');
+      updateIdentifier();
+      createUser(username);
+    } else {
+      // Handle if username or password is empty
+      console.log('Please enter both username and password.');
+    }
+  });
+  
 
 document.addEventListener('DOMContentLoaded', updateIdentifier);
 
@@ -58,3 +85,84 @@ function randomizeOtherUserText() {
 
 // Start the interval
 randomizeOtherUserText();
+
+let user = {}
+
+// HTTP Requests
+function getUser(username) {
+    const url = `/user?username=${encodeURIComponent(username)}`;
+    return fetch(url)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`User not found for username: ${username}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Received data", data);
+        if (data && Object.keys(data).length > 0) {
+          user = data;
+          localStorage.setItem('username', data['username']);
+          localStorage.setItem('chaosContents', JSON.stringify(data['bag']));
+          localStorage.setItem('notes', JSON.stringify(data['notepads']));
+          localStorage.setItem('campaignData', JSON.stringify(data['campaigns']));
+        } else {
+          // Handle the case where user data is empty
+          console.error('User data is empty');
+        }
+      })
+      .catch((error) => {
+        // Handle errors here
+        console.error("Error fetching user data:", error);
+        // Display a user-friendly message to the user
+        alert("Username not found. Please check your username and try again.");
+      });
+  }
+
+  function createUser(username) {
+    // Defaults
+    let campaignData = {
+        'Night of the Zealot':{'Investigator':'Daisy Walker','Notes':""}
+    };
+    
+    let chaosContents = {"Eldersign": 1, 
+        "Autofail": 1, "0": 1, "1": 1, 
+        "bless": 0, "cultist":2, "curse":0, 
+        "elderthing":0,"minus1":1,"minus2":2,
+        "minus3":1,"minus4":1,"minus5":0,
+        "minus6":0,"minus7":0,"minus8":0,
+        "skull":1,"tablet":0};
+    
+    let notes = {
+        'Notepad 1':"",
+        'Notepad 2':"",
+    };
+    
+    let userData = {
+        [username]: {
+            'username': username,
+            'campaigns': campaignData,
+            'theme': 'default',
+            'notepads': notes,
+            'bag': chaosContents
+        }      
+    }
+    console.log("Sending out",userData)
+    fetch('/createUser', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('User created successfully:', data);
+          // Handle the response from the server if needed
+        })
+        .catch(error => {
+          console.error('Error creating user:', error);
+          // Handle errors here
+        });
+  }
+  
