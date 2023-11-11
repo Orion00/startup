@@ -86,9 +86,28 @@ function randomizeOtherUserText() {
 // Start the interval
 randomizeOtherUserText();
 
-let user = {}
+
+// External API
+function getQuote() {
+    fetch('https://api.quotable.io/random')
+    .then(response => response.json())
+    .then(data => {
+        const quoteElement = document.getElementById('quote-text');
+        quoteElement.textContent = `${data.content} (${data.author})`;
+    })
+    .catch(error => {
+        console.error('Error fetching quote:', error);
+    })
+}
+
+document.addEventListener('DOMContentLoaded',getQuote())
+
+
+
 
 // HTTP Requests
+let user = {}
+
 function getUser(username) {
     const url = `/user?username=${encodeURIComponent(username)}`;
     return fetch(url)
