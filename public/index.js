@@ -42,6 +42,7 @@ document.getElementById('login').addEventListener('submit', function (e) {
       console.log('User created');
       updateIdentifier();
       createUser(username);
+      getUser(username);
     } else {
       // Handle if username or password is empty
       console.log('Please enter both username and password.');
@@ -121,7 +122,7 @@ function getUser(username) {
         console.log("Received data", data);
         if (data && Object.keys(data).length > 0) {
           user = data;
-          localStorage.setItem('username', data['username']);
+          //localStorage.setItem('username', data['username']);
           localStorage.setItem('chaosContents', JSON.stringify(data['bag']));
           localStorage.setItem('notes', JSON.stringify(data['notepads']));
           localStorage.setItem('campaignData', JSON.stringify(data['campaigns']));
@@ -145,12 +146,12 @@ function getUser(username) {
     };
     
     let chaosContents = {"Eldersign": 1, 
-        "Autofail": 1, "0": 1, "1": 1, 
-        "bless": 0, "cultist":2, "curse":0, 
-        "elderthing":0,"minus1":1,"minus2":2,
-        "minus3":1,"minus4":1,"minus5":0,
+        "Autofail": 1, "0": 0, "1": 0, 
+        "bless": 0, "cultist":0, "curse":0, 
+        "elderthing":0,"minus1":0,"minus2":0,
+        "minus3":0,"minus4":0,"minus5":0,
         "minus6":0,"minus7":0,"minus8":0,
-        "skull":1,"tablet":0};
+        "skull":0,"tablet":0};
     
     let notes = {
         'Notepad 1':"",

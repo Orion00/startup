@@ -3,21 +3,58 @@
 
 let delete_mode = false;
 let animationInProgress = false;
+let chaosContents;
+let username;
 
-let chaosContents = JSON.parse(localStorage.getItem('chaosContents'))
+// Defaults to local storage.
+// If local storage is empty and username is empty (they haven't logged in), grabs default bag from test user in the server
+// If they have logged in, grabs their bag from the server
 
-if (!chaosContents || Object.keys(chaosContents).length === 0) {
-    chaosContents = {"Eldersign": 1, 
-    "Autofail": 1, "0": 1, "1": 1, 
-    "bless": 0, "cultist":2, "curse":0, 
-    "elderthing":0,"minus1":1,"minus2":2,
-    "minus3":1,"minus4":1,"minus5":0,
-    "minus6":0,"minus7":0,"minus8":0,
-    "skull":1,"tablet":0};
+// SETUP PAGE
+document.addEventListener('DOMContentLoaded', () => {
+    fetchDataAndPopulateTokens().then(() => {
+        console.log("Finished grabbing data and filling bag")
+    })
+});
 
-    localStorage.setItem('chaosContents', JSON.stringify(chaosContents));
-  }
+async function fetchDataAndPopulateTokens() {
+    await fetchData();
+    populateTokens();
+}
 
+async function fetchData() {
+    // Check if there's information on the server
+    if (checkIfLoggedIn()) {
+        username = sessionStorage.getItem('username');
+        console.log(username, "(Username)");
+        await getChaosContents(username);
+    } else {
+        // If not logged in or no server information, check local storage
+        chaosContents = JSON.parse(localStorage.getItem('chaosContents'));
+
+        if (!chaosContents) {
+            // If both server and local storage are empty, use the default user
+            await getChaosContents('test');
+            console.log('Using default user');
+        }
+
+        // Retrieve chaosContents after the promise has resolved
+        chaosContents = JSON.parse(localStorage.getItem('chaosContents'));
+        console.log(chaosContents);
+    }
+}
+
+function populateTokens() {
+    chaosContents = JSON.parse(localStorage.getItem("chaosContents"));
+    for (const key in chaosContents) {
+        const times = chaosContents[key];
+        for (let i = 0; i < times; i++) {
+            addToken(key);
+        }
+    }
+}
+
+// BUTTON FUNCTIONALITY
 
 function pullToken() {
     if (animationInProgress) {
@@ -128,18 +165,6 @@ function stirBag() {
     });
 }
 
-// SETUP PAGE
-function populateTokens() {
-    chaosContents = JSON.parse(localStorage.getItem("chaosContents"));
-    for (const key in chaosContents) {
-        const times = chaosContents[key];
-        for (let i = 0; i < times; i++) {
-            addToken(key);
-        }
-    }
-}
-
-document.addEventListener('DOMContentLoaded', populateTokens);
 
 // ADD AND REMOVE CAPABILITIES
 function addToken(input) {
@@ -161,8 +186,13 @@ function addTokenAndIncrement(input) {
     let src = addToken(input);
     chaosContents[src] += 1;
     console.log("Total",src,"is",chaosContents[src]);
+    
+    // Update local storage always and backend if logged in
     localStorage.setItem('chaosContents', JSON.stringify(chaosContents));
+    updateBackendBag(chaosContents);
 }
+
+
 
 function removeToken(event) {
     // Make sure to check bless/curse
@@ -172,8 +202,11 @@ function removeToken(event) {
         toggleDeleteMode();
         let src = target.src.split('/').pop().replace('.png', '')
         chaosContents[src] -= 1;
-        localStorage.setItem('chaosContents', JSON.stringify(chaosContents));
         console.log("Total",src,"is",chaosContents[src]);
+
+        // Update local storage always and backend if logged in
+        localStorage.setItem('chaosContents', JSON.stringify(chaosContents));
+        updateBackendBag(chaosContents);
     }
 }
 
@@ -193,5 +226,63 @@ function toggleDeleteMode() {
       document.getElementById('deleteButton').style.backgroundColor = 'pink';
     } else {
       document.getElementById('deleteButton').style.backgroundColor = '';
+    }
+}
+
+function checkIfLoggedIn() {
+    return (sessionStorage.getItem('username'))
+}
+
+// GET and POST
+function getChaosContents(username) {
+    const url = `/user?username=${encodeURIComponent(username)}`;
+    return fetch(url)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`User not found for username: ${username}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Received data", data);
+        if (data && Object.keys(data).length > 0) {
+          let user = data;
+          localStorage.setItem('chaosContents', JSON.stringify(data['bag']));
+        } else {
+          // Handle the case where user data is empty
+          console.error('User data is empty');
+        }
+      })
+      .catch((error) => {
+        // Handle errors here
+        console.error("Error fetching user data:", error);
+        // Display a user-friendly message to the user
+        alert("Username not found. Please check your username and try again.");
+      });
+  }
+
+function updateBackendBag(updatedBag) {
+    if (checkIfLoggedIn()) {
+        username = sessionStorage.getItem('username');
+        const url = `/updateBag?username=${encodeURIComponent(username)}`;
+        console.log(url)
+        // Make the POST request
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username: username, bag: updatedBag }),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Failed to update bag on the server: ${response.status}`);
+            }
+            console.log('Bag updated on the server');
+        })
+        .catch(error => {
+            console.error('Error updating bag on the server:', error);
+            // Handle the error as needed
+        });
     }
 }

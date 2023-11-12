@@ -6,32 +6,38 @@
 // CHANGING SELECTION FUNCTIONS
 const campaignSelector = document.getElementById('campaignSelector');
 const campaignNotes = document.getElementById('campaignnotes');
+let campaignData;
+let username;
 
 // Initialize or retrieve data from local storage
-function getCampaignData() {
-    return fetch('/campaignData')
-    .then(response => response.json())
-    .then((data) => {
-        console.log("Received data",data)
-        console.log("Data then campaigndata",data,campaignData)
-        if (data && Object.keys(data).length > 0) {
-            campaignData = data;
-          }
-        console.log("Data then campaigndata",data,campaignData)
-    });
+document.addEventListener('DOMContentLoaded', fetchDataAndUpdatePage);
+
+async function fetchDataAndUpdatePage() {
+    await fetchData();
+    displayTextArea();
 }
 
+async function fetchData() {
+    // Check if there's information on the server
+    if (checkIfLoggedIn()) {
+        username = sessionStorage.getItem('username');
+        console.log(username, "(Username)");
+        await getCampaigns(username);
+        campaignData = JSON.parse(localStorage.getItem('campaignData'));
+        console.log(campaignData);
+    } else {
+        // If not logged in or no server information, check local storage
+        campaignData = JSON.parse(localStorage.getItem('campaignData'));
 
-let campaignData = JSON.parse(localStorage.getItem('campaignData'))
-console.log("campaignData local storage",campaignData)
-
-if (!campaignData || Object.keys(campaignData).length === 0) {
-    campaignData = {
-        'Night of the Zealot':{'Investigator':'Daisy Walker','Notes':""}
-    };     
-    localStorage.setItem('campaignData', JSON.stringify(campaignData));
+        if (!campaignData) {
+            // If both server and local storage are empty, use the default user
+            await getCampaigns('test');
+            console.log('Using default user');
+        }
+        campaignData = JSON.parse(localStorage.getItem('campaignData'));
+        console.log(campaignData);
+    }
 }
-
 
 // Function to update the text area based on the dropdown selection
 function updateTextArea() {
@@ -46,23 +52,12 @@ campaignSelector.addEventListener('change', updateTextArea);
 document.querySelector('.save').addEventListener('click', function () {
     const selectedCampaign = campaignSelector.options[campaignSelector.selectedIndex].text.split(" - ")[0];
     campaignData[selectedCampaign]['Notes'] = campaignNotes.value;
-    localStorage.setItem('campaignData', JSON.stringify(campaignData));
     console.log("Saving",campaignData)
 
-    fetch('/campaignData', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(campaignData),
-      })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Success:', data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+    // Update local storage always and backend if logged in
+    localStorage.setItem('campaignData', JSON.stringify(campaignData));
+    updateBackendCampaigns(campaignData);
+
 });
 
 // CLEAR BUTTON FUNCTION
@@ -70,7 +65,10 @@ document.querySelector('.clear').addEventListener('click', function () {
     const selectedCampaign = campaignSelector.options[campaignSelector.selectedIndex].text.split(" - ")[0];
     campaignData[selectedCampaign]['Notes'] = ""; // Clear the campaign's text
     campaignNotes.value = ""; // Clear the text area
+
+    // Update local storage always and backend if logged in
     localStorage.setItem('campaignData', JSON.stringify(campaignData));
+    updateBackendCampaigns(campaignData);
 });
 
 // ADD CAMPAIGN
@@ -83,9 +81,11 @@ function addCampaign() {
         Investigator: newCampaignInvestigator,
         Notes: "",
     };
-    // TODO: Add Campaign to DB
-    localStorage.setItem('campaignData', JSON.stringify(campaignData));
     addSelectOption(newCampaignName)
+
+    // Update local storage always and backend if logged in
+    localStorage.setItem('campaignData', JSON.stringify(campaignData));
+    updateBackendCampaigns(campaignData);
 }
 
 function displayTextArea() {
@@ -99,14 +99,10 @@ function displayTextArea() {
     }
 }
 
-// Populate select box with initial data
-document.addEventListener('DOMContentLoaded', function() {
-    displayTextArea();
-    getCampaignData().then(() => {
-        console.log("Nah")
-        displayTextArea()
-    })
-})
+// HELPER
+function checkIfLoggedIn() {
+    return (sessionStorage.getItem('username'))
+}
 
 function addSelectOption(campaignName) {
     let newSelectOption = document.createElement('option')
@@ -115,4 +111,58 @@ function addSelectOption(campaignName) {
     newSelectOption.value = newSelectInvestigatorName.split(" ")[0]
     newSelectOption.textContent = newSelectCampaignName + ' - ' + newSelectInvestigatorName
     campaignSelector.append(newSelectOption)
+}
+
+// GET and POST
+function getCampaigns(username) {
+    const url = `/user?username=${encodeURIComponent(username)}`;
+    return fetch(url)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`User not found for username: ${username}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Received data", data);
+        if (data && Object.keys(data).length > 0) {
+          localStorage.setItem('campaignData', JSON.stringify(data['campaigns']));
+          console.log("Our data is", data['campaigns'])
+        } else {
+          // Handle the case where user data is empty
+          console.error('User data is empty');
+        }
+      })
+      .catch((error) => {
+        // Handle errors here
+        console.error("Error fetching user data:", error);
+        // Display a user-friendly message to the user
+        alert("Username not found. Please check your username and try again.");
+      });
+  }
+
+function updateBackendCampaigns(campaigns) {
+    if (checkIfLoggedIn()) {
+        username = sessionStorage.getItem('username');
+        const url = `/updateCampaigns?username=${encodeURIComponent(username)}`;
+        console.log(url)
+        // Make the POST request
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username: username, campaigns: campaigns}),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Failed to update bag on the server: ${response.status}`);
+            }
+            console.log('Campaigns updated on the server');
+        })
+        .catch(error => {
+            console.error('Error updating campaigns on the server:', error);
+            // Handle the error as needed
+        });
+    }
 }
