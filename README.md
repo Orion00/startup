@@ -88,3 +88,18 @@ For this deliverable I used primarily bootstrap to make the website worth lookin
 **Future Websocket** "User####" text on homepage currently generates a random username every 2-4 seconds. I plan to have only the most recent logged on user show up.
 
 **Interaction Logic** Notepad names are editable. Almost all buttons animate, save, clear, randomize, and anything else advertised. Still working on stir bag, pull token, add campaign, and remove campaign. (Liberal use of ChatGPT to debug and learning how to write functions. It's also far better at documenting code than I am)
+
+### Service deliverable
+For this deliverable I added several front and backend endpoints to communicate user information.
+I didn't have time to add calls for chaos bag updating, campaign log updating, or notepad updating.
+Currently those 3 save changes in local storage, I intend to add the changes to the server as well in the next few days.
+
+**Node.js/Express HTTP service** Started
+
+**Static middleware for frontend** Done
+
+**Calls to third party endpoints** Simple random quote API on home page
+
+**Backend service endpoints** Placeholders for login that stores the current user on the server. Missing GET and POST endpoints for chaos bag, campaign log, and notepads
+
+**Frontend calls service endpoints** Done using fetch
