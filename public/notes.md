@@ -17,6 +17,9 @@ scp -i ~/keys/production.pem [file to be copied] ubuntu@35.171.205.9:/public_htm
 ./deployFiles.sh -k ~/keys/production.pem -h tinyproject.click -s simon
 ./deployFiles.sh -k ~/keys/production.pem -h tinyproject.click -s startup
 
+./deployService.sh -k ~/keys/production.pem -h tinyproject.click -s simon
+./deployService.sh -k ~/keys/production.pem -h tinyproject.click -s startup
+
 Startup Features:
 -Random joke
 -Drink pointer (randomized arrow that says where to put your drink)
