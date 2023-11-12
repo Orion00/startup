@@ -5,7 +5,7 @@ const app = express();
 
 // Serve Website
 app.use(express.static('public'))
-app.listen(3500, function() {console.log("Server is running")})
+app.listen(4000, function() {console.log("Server is running")})
 
 
 // Endpoints
