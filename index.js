@@ -105,3 +105,19 @@ app.post('/updateCampaigns', (req, res) => {
 });
 
 //// Notepads
+// Add, Remove, Save, Clear Notes
+app.post('/updateNotepads', (req, res) => {
+  const data = req.body;
+  const username = data['username'];
+  const updatedNotepads = data['notes'];
+
+  // Check if the username exists
+  if (userData.hasOwnProperty(username)) {
+      // Update the 'bag' property of the user data
+      userData[username]['notepads'] = updatedNotepads;
+      console.log("Successfully updated notes");
+      res.json({ message: 'notes updated successfully' });
+  } else {
+      res.status(404).json({ error: 'User not found' });
+  }
+});

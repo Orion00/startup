@@ -73,6 +73,7 @@ document.querySelector('.clear').addEventListener('click', function () {
 
 // ADD CAMPAIGN
 function addCampaign() {
+    console.log("Is this thing ever called?")
     const selectedModalCampaign = document.getElementById('campaignModal');
     const selectedModalName = document.getElementById('investigatorInput');
     const newCampaignName = selectedModalCampaign.options[selectedModalCampaign.selectedIndex].text;
@@ -82,7 +83,8 @@ function addCampaign() {
         Notes: "",
     };
     addSelectOption(newCampaignName)
-
+    console.log("New name is this thing",selectedModalName.value)
+    selectedModalName.value = "";
     // Update local storage always and backend if logged in
     localStorage.setItem('campaignData', JSON.stringify(campaignData));
     updateBackendCampaigns(campaignData);
@@ -98,6 +100,25 @@ function displayTextArea() {
     updateTextArea();
     }
 }
+
+// REMOVE CAMPAIGN
+function removeCampaign() {
+    const selectedText = campaignSelector.options[campaignSelector.selectedIndex].text;
+    const selectedCampaign = selectedText.split(" - ")[0];
+    // TODO: Add check if you want to remove
+    console.log("Are you sure you want to remove", selectedCampaign);
+
+    if (selectedCampaign) {
+        delete campaignData[selectedCampaign];
+        localStorage.setItem('campaignData', JSON.stringify(campaignData));
+        updateBackendCampaigns(campaignData);
+        displayTextArea();
+    } else {
+        console.log("Error. Remove button didn't work.");
+    }
+}
+
+
 
 // HELPER
 function checkIfLoggedIn() {

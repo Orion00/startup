@@ -37,7 +37,7 @@ Startup Features:
 -Deckbuilding eventually (stealing DB from someone who has scanned all 2,000 cards)
 
 TODO:
--Add all images for themes (make hand images smaller, get color tentacle)
+-Add all images for themes (make hand images smaller, get color tentacle) (add Butter's cat paw of Ulthar)
 -Make cursor change for theme
 -Get a better favicon (crop CthulhuBusiness? Have Phoenix or I draw one?)
 -Find new font family
@@ -45,9 +45,9 @@ TODO:
 (JS)
 -(Campaign Log) Switch to new campaign when creating new campaign
 -(Campaign Log) Save when hitting enter
--(Campaign Log) Modal checks if investigator name is legal
+-(Campaign Log) Modal checks if investigator name is legal (and not empty)
 -(Campaign Log) Fix adding more than 1 duplicate campaign breaks things
--(Campaign Log) Add "remove campaign" functionality
+-(Campaign Log) If selecting custom, add text entry for name of the campaign
 -(Drink Pointer) Protect the spin from being spammed. Generated a 0 and that causes crashes?
 -(Chaos Bag) Make Adding token not jumpy when it doesn't exist (Make it invisible?)
 -(Index) Theme change (local cache save theme name and then manually change every src to use that folder)

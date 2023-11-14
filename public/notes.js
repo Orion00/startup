@@ -1,24 +1,43 @@
 "use strict"
-const max_notes = 4;
-
-// TODO: Figure out how to store this in the database
-// TODO: When changing names, update notes[old name] = notes[new name]
-let curr_notes = 0;
-
-
-
-let notes = JSON.parse(localStorage.getItem('notes'))
-
-if (!notes || Object.keys(notes).length === 0) {
-    notes = {
-        'Notepad 1':"",
-        'Notepad 2':"",
-    };
-    localStorage.setItem('notes', JSON.stringify(notes));
-  }
-
-
 let delete_mode = false;
+const max_notes = 4;
+let curr_notes = 0;
+let notes;
+let username;
+
+//TODO: Add addNoteAndIncrement (like campaigns or chaos bag)
+//TODO: Connect updateBackendNotes (to everything)
+
+document.addEventListener('DOMContentLoaded', fetchDataAndUpdateNotes);
+
+async function fetchDataAndUpdateNotes() {
+    await fetchData();
+    updateNotes();
+}
+
+async function fetchData() {
+    // Check if there's information on the server
+    if (checkIfLoggedIn()) {
+        username = sessionStorage.getItem('username');
+        console.log(username, "(Username)");
+        await getNotes(username);
+        notes = JSON.parse(localStorage.getItem('notes'));
+        console.log(notes);
+    } else {
+        // If not logged in or no server information, check local storage
+        notes = JSON.parse(localStorage.getItem('notes'))
+
+        if (!notes) {
+            // If both server and local storage are empty, use the default user
+            await getNotes('test');
+            console.log('Using default user');
+        }
+        notes = JSON.parse(localStorage.getItem('notes'));
+        console.log(notes);
+    }
+}
+
+
 
 // ADDING NOTEBOOK Functions
 function addNote(notepadName,notepadText) {
@@ -60,6 +79,7 @@ function addNote(notepadName,notepadText) {
         //TODO: Add to DB too
         notes[notepadName] = notepadText;
         localStorage.setItem('notes', JSON.stringify(notes));
+        updateBackendNotes(notes);
         console.log(notepadName,notepadText)
 
         let nButton1 = create('button',['btn','btn-success'],'Save');
@@ -93,9 +113,9 @@ function deleteElement(event) {
             curr_notes -= 1;
             const label = target.querySelector("label").textContent
             if (notes.hasOwnProperty(label)) {
-                //TODO: Remove from DB too
                 delete notes[label]
                 localStorage.setItem('notes', JSON.stringify(notes));
+                updateBackendNotes(notes);
             }
             
         } else {
@@ -103,8 +123,8 @@ function deleteElement(event) {
             const label = parentColDiv.querySelector("label").textContent
             if (notes.hasOwnProperty(label)) {
                 delete notes[label]
-                //TODO: Remove from DB too
                 localStorage.setItem('notes', JSON.stringify(notes));
+                updateBackendNotes(notes);
             }
             if (parentColDiv) {
                 parentColDiv.remove();
@@ -128,11 +148,11 @@ document.addEventListener('DOMContentLoaded', function() {
 })
 
 // Populates notepads based on local storage
-document.addEventListener('DOMContentLoaded', function () {
+function updateNotes() {
     for (let n in notes) {
         addNote(n, notes[n])
     }
-})
+}
 
 function toggleDeleteMode() {
     delete_mode = !delete_mode;
@@ -169,6 +189,7 @@ function makeEditable(event) {
                 notes[input.value] = value;
                 delete notes[originalText];
                 localStorage.setItem('notes', JSON.stringify(notes));
+                updateBackendNotes(notes);
             }
         }
         input.replaceWith(label);
@@ -186,19 +207,18 @@ document.addEventListener('DOMContentLoaded', function() {
     labelElements.forEach(lab => lab.addEventListener('dblclick', makeEditable));
 })
 
-// SAVE FUNCTIONS (NEED TO CONNECT TO DB)
+// SAVE FUNCTIONS
 function saveContent(event) {
     const formGroup = event.target.previousElementSibling;
     const formGroupLabel = formGroup.querySelector('label')
     const formGroupText = formGroup.querySelector('[id^="notes"]');
 
     if (formGroupText) {
-        // If the sibling element exists, perform the necessary actions
-        // For example, you can modify or manipulate the sibling element
         console.log('Textarea label:',formGroupLabel.textContent)
         console.log('Textarea content:', formGroupText.value);
         notes[formGroupLabel.textContent] = formGroupText.value;
         localStorage.setItem('notes', JSON.stringify(notes));
+        updateBackendNotes(notes);
         
     } else {
         // If the sibling element doesn't exist, handle accordingly
@@ -211,7 +231,7 @@ document.addEventListener('DOMContentLoaded', function() {
     saveButtons.forEach(button => button.addEventListener('click',saveContent));
 })
 
-// CLEAR FUNCTIONS (NEED TO CONNECT TO DB)
+// CLEAR FUNCTIONS
 function clearContent(event) {
     const formGroup = event.target.previousElementSibling.previousElementSibling;
     const formGroupLabel = formGroup.querySelector('label')
@@ -225,6 +245,7 @@ function clearContent(event) {
         formGroupText.value ='';
         notes[formGroupLabel.textContent] = formGroupText.value;
         localStorage.setItem('notes', JSON.stringify(notes));
+        updateBackendNotes(notes);
     } else {
         // If the sibling element doesn't exist, handle accordingly
         console.log("Error: Clear Button doesn't work");
@@ -235,3 +256,62 @@ document.addEventListener('DOMContentLoaded', function() {
     const clearButtons = document.querySelectorAll('.clear');
     clearButtons.forEach(button => button.addEventListener('click',clearContent));
 })
+
+// Helper Functions
+function checkIfLoggedIn() {
+    return (sessionStorage.getItem('username'))
+}
+
+// GET and Post
+function getNotes(username) {
+    const url = `/user?username=${encodeURIComponent(username)}`;
+    return fetch(url)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`User not found for username: ${username}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Received data", data);
+        if (data && Object.keys(data).length > 0) {
+          localStorage.setItem('notes', JSON.stringify(data['notepads']));
+          console.log("Our data is", data['campaigns'])
+        } else {
+          // Handle the case where user data is empty
+          console.error('User data is empty');
+        }
+      })
+      .catch((error) => {
+        // Handle errors here
+        console.error("Error fetching user data:", error);
+        // Display a user-friendly message to the user
+        alert("Username not found. Please check your username and try again.");
+      });
+  }
+
+  function updateBackendNotes(notes) {
+    if (checkIfLoggedIn()) {
+        username = sessionStorage.getItem('username');
+        const url = `/updateNotepads?username=${encodeURIComponent(username)}`;
+        console.log(url)
+        // Make the POST request
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username: username, notes: notes}),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Failed to update notes on the server: ${response.status}`);
+            }
+            console.log('Notes updated on the server');
+        })
+        .catch(error => {
+            console.error('Error updating notes on the server:', error);
+            // Handle the error as needed
+        });
+    }
+}
