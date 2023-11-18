@@ -1,5 +1,6 @@
 "use strict"
 
+const DB = require('./database.js');
 const express = require('express');
 const app = express();
 
@@ -42,31 +43,52 @@ let userData = {
 
 //// User
 // Create User
-app.post('/createUser', (req, res) => {
+app.post('/createUser', async (req, res) => {
   const newUser = req.body;
   const newUsername = Object.keys(newUser)[0];
 
-  // Check if the username already exists
-  if (userData.hasOwnProperty(newUsername)) {
-      res.status(409).json({ error: 'Username already exists' });
-  } else {
-      // Add the new user to the existing userData
-      userData[newUsername] = newUser[newUsername];
-      res.json({ message: 'User created successfully' });
-  }
+  // TODO: Replace with hashed password
+  const newPassword = "123"
+
+  const foundUser = await DB.getUser(newUsername);
+  DB.createUser(newUser)
+  res.json({ message: 'User created successfully' });
+  // Check if username exists
+  // if (Object.keys(foundUser).length === 0) {
+  //   res.status(409).json({ error: 'Username already exists' });
+  // } else {
+  // // Add user to DB
+  //   DB.createUser(newUser)
+  //   res.json({ message: 'User created successfully' });
+  // }
+
+  // // Check if the username already exists
+  // if (userData.hasOwnProperty(newUsername)) {
+  //     res.status(409).json({ error: 'Username already exists' });
+  // } else {
+  //     // Add the new user to the existing userData
+  //     userData[newUsername] = newUser[newUsername];
+  //     res.json({ message: 'User created successfully' });
+  // }
 });
 
 // Get User
-app.get('/user', function (req, res) {
-    const username = req.query.username; 
+app.get('/user', async (req, res) => {
+    const username = req.query.username;
+
+    const foundUser = await DB.getUser();
+    console.log("Found user", foundUser, typeof(foundUser))
+    res.json(foundUser);
+
     // Check if the requested username exists in userData
-    if (userData.hasOwnProperty(username)) {
-      const user = userData[username];
-      res.json(user);
-    } else {
-      res.status(404).json({ error: 'User not found' });
-    }
+    // if (userData.hasOwnProperty(username)) {
+    //   const user = userData[username];
+    //   res.json(user);
+    // } else {
+    //   res.status(404).json({ error: 'User not found' });
+    // }
   });
+
 
 //// Chaos Bag
 // Add or Remove Token
