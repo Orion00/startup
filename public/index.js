@@ -19,7 +19,7 @@ document.getElementById('login').addEventListener('submit', function (e) {
 
     console.log('Username (not password) saved to session storage.');
     updateIdentifier();
-    getUser(username);
+    getUser(getGeneric(username));
   } else {
     // Handle if username or password is empty
     console.log('Please enter both username and password.');
@@ -44,7 +44,7 @@ document.getElementById('createButton').addEventListener('click', function (e) {
     console.log('User created');
     updateIdentifier();
     createUser(username);
-    getUser(username);
+    getUser(Generic(username));
   } else {
     // Handle if username or password is empty
     console.log('Please enter both username and password.');
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded',getQuote())
 // HTTP Requests
 let user = {}
 
-function getUser(username) {
+function getGeneric(username) {
   const url = `/user?username=${encodeURIComponent(username)}`;
   return fetch(url)
     .then(response => {
@@ -121,13 +121,10 @@ function getUser(username) {
       return response.json();
     })
     .then((data) => {
-      console.log("Received data", data);
-      if (data && Object.keys(data).length > 0) {
-        user = data;
-        //localStorage.setItem('username', data['username']);
-        localStorage.setItem('chaosContents', JSON.stringify(data['bag']));
-        localStorage.setItem('notes', JSON.stringify(data['notepads']));
-        localStorage.setItem('campaignData', JSON.stringify(data['campaigns']));
+      console.log("Received data", data[0]);
+      if (data && Object.keys(data[0]).length > 0) {
+        user = data[0];
+        return user
       } else {
         // Handle the case where user data is empty
         console.error('User data is empty');
@@ -139,6 +136,12 @@ function getUser(username) {
       // Display a user-friendly message to the user
       alert("Username not found. Please check your username and try again.");
     });
+}
+
+function getUser(username) {
+  localStorage.setItem('chaosContents', JSON.stringify(user['bag']));
+  localStorage.setItem('notes', JSON.stringify(user['notepads']));
+  localStorage.setItem('campaignData', JSON.stringify(user['campaigns']));
 }
 
   // TODO: Use local cache to create user instead of defaults
@@ -162,15 +165,14 @@ function createUser(username) {
   };
   
   let userData = {
-      [username]: {
           'username': username,
           'campaigns': campaignData,
           'theme': 'default',
           'notepads': notes,
-          'bag': chaosContents
-      }      
+          'bag': chaosContents   
   }
-  console.log("Sending out",userData)
+
+  console.log("Sending out", userData)
   fetch('/createUser', {
       method: 'POST',
       headers: {

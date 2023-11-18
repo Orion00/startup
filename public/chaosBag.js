@@ -6,9 +6,8 @@ let animationInProgress = false;
 let chaosContents;
 let username;
 
-// Defaults to local storage.
-// If local storage is empty and username is empty (they haven't logged in), grabs default bag from test user in the server
-// If they have logged in, grabs their bag from the server
+// Defaults to user, then local storage
+// If both are empty, grabs default bag from test user in the server
 
 // SETUP PAGE
 document.addEventListener('DOMContentLoaded', () => {
@@ -30,7 +29,7 @@ async function fetchData() {
         await getChaosContents(username);
     } else {
         // If not logged in or no server information, check local storage
-        chaosContents = JSON.parse(localStorage.getItem('chaosContents'));
+        chaosContents = localStorage.getItem('chaosContents');
 
         if (!chaosContents) {
             // If both server and local storage are empty, use the default user
@@ -244,10 +243,10 @@ function getChaosContents(username) {
         return response.json();
       })
       .then((data) => {
-        console.log("Received data", data);
-        if (data && Object.keys(data).length > 0) {
-          let user = data;
-          localStorage.setItem('chaosContents', JSON.stringify(data['bag']));
+        console.log("Received data", data[0]);
+        if (data && Object.keys(data[0]).length > 0) {
+          let user = data[0];
+          localStorage.setItem('chaosContents', JSON.stringify(user['bag']));
         } else {
           // Handle the case where user data is empty
           console.error('User data is empty');

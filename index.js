@@ -44,49 +44,33 @@ let userData = {
 //// User
 // Create User
 app.post('/createUser', async (req, res) => {
+    // TODO: Replace with hashed password
+  const newPassword = "123";
+
   const newUser = req.body;
+  newUser['hashedpassword'] = newPassword;
   const newUsername = Object.keys(newUser)[0];
 
-  // TODO: Replace with hashed password
-  const newPassword = "123"
-
   const foundUser = await DB.getUser(newUsername);
-  DB.createUser(newUser)
-  res.json({ message: 'User created successfully' });
+  console.log("Creating a new user, this is our starting point",newUser)
   // Check if username exists
-  // if (Object.keys(foundUser).length === 0) {
-  //   res.status(409).json({ error: 'Username already exists' });
-  // } else {
-  // // Add user to DB
-  //   DB.createUser(newUser)
-  //   res.json({ message: 'User created successfully' });
-  // }
-
-  // // Check if the username already exists
-  // if (userData.hasOwnProperty(newUsername)) {
-  //     res.status(409).json({ error: 'Username already exists' });
-  // } else {
-  //     // Add the new user to the existing userData
-  //     userData[newUsername] = newUser[newUsername];
-  //     res.json({ message: 'User created successfully' });
-  // }
+  if (Object.keys(foundUser).length === 0) {
+    // Add user to DB
+    DB.createUser(newUser)
+    res.json({ message: 'User created successfully' });
+  } else {
+    res.status(409).json({ error: 'Username already exists' });
+  }
 });
 
 // Get User
 app.get('/user', async (req, res) => {
+    console.log("We got this request",req.query)
     const username = req.query.username;
-
-    const foundUser = await DB.getUser();
+    console.log("We got this username", username)
+    const foundUser = await DB.getUser(username);
     console.log("Found user", foundUser, typeof(foundUser))
     res.json(foundUser);
-
-    // Check if the requested username exists in userData
-    // if (userData.hasOwnProperty(username)) {
-    //   const user = userData[username];
-    //   res.json(user);
-    // } else {
-    //   res.status(404).json({ error: 'User not found' });
-    // }
   });
 
 
@@ -107,6 +91,26 @@ app.post('/updateBag', (req, res) => {
       res.status(404).json({ error: 'User not found' });
   }
 });
+
+// app.post('/createUser', async (req, res) => {
+//   // TODO: Replace with hashed password
+// const newPassword = "123";
+
+// const newUser = req.body;
+// newUser['hashedpassword'] = newPassword;
+// const newUsername = Object.keys(newUser)[0];
+
+// const foundUser = await DB.getUser(newUsername);
+// console.log("Creating a new user, this is our starting point",newUser)
+// // Check if username exists
+// if (Object.keys(foundUser).length === 0) {
+//   // Add user to DB
+//   DB.createUser(newUser)
+//   res.json({ message: 'User created successfully' });
+// } else {
+//   res.status(409).json({ error: 'Username already exists' });
+// }
+// });
 
 //// Campaign Log
 // Add, Remove, Save, Clear Campaigns

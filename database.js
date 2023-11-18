@@ -25,7 +25,7 @@ function getUser(user_name) {
 }
 
 async function createUser(user) {
-  console.log("Trying to create a user with this data", user)
+  console.log("DB Trying to create a user with this data", user)
     const result = await users.insertOne(user)
     return result;
 }
