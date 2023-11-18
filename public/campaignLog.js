@@ -145,10 +145,11 @@ function getCampaigns(username) {
         return response.json();
       })
       .then((data) => {
-        console.log("Received data", data);
-        if (data && Object.keys(data).length > 0) {
-          localStorage.setItem('campaignData', JSON.stringify(data['campaigns']));
-          console.log("Our data is", data['campaigns'])
+        console.log("Received data", data[0]);
+        if (data && Object.keys(data[0]).length > 0) {
+            let user = data[0];
+          localStorage.setItem('campaignData', JSON.stringify(user['campaigns']));
+          console.log("Our data is", user['campaigns'])
         } else {
           // Handle the case where user data is empty
           console.error('User data is empty');

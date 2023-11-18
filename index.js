@@ -74,7 +74,7 @@ app.get('/user', async (req, res) => {
 // Add or Remove Token
 app.post('/updateBag', (req, res) => {
   const data = req.body;
-  const username = data['username'];
+  // const username = data['username'];
   const updatedBag = data['bag'];
 
   // console.log("Data",data)
@@ -90,34 +90,42 @@ app.post('/updateBag', (req, res) => {
 // Add, Remove, Save, Clear Campaigns
 app.post('/updateCampaigns', (req, res) => {
   const data = req.body;
-  const username = data['username'];
+  // const username = data['username'];
   const updatedCampaigns = data['campaigns'];
 
-  // Check if the username exists
-  if (userData.hasOwnProperty(username)) {
-      // Update the 'bag' property of the user data
-      userData[username]['campaigns'] = updatedCampaigns;
-      console.log("Successfully updated campaigns");
-      res.json({ message: 'Campaigns updated successfully' });
-  } else {
-      res.status(404).json({ error: 'User not found' });
-  }
+  // console.log("Data",data)
+  // console.log("Username",username)
+  console.log("Campaign",updatedCampaigns)
+
+  const editedUser = DB.editUser(data,'campaigns')
+  res.json(editedUser)
 });
 
 //// Notepads
 // Add, Remove, Save, Clear Notes
 app.post('/updateNotepads', (req, res) => {
-  const data = req.body;
-  const username = data['username'];
-  const updatedNotepads = data['notes'];
+  // const data = req.body;
+  // const username = data['username'];
+  // const updatedNotepads = data['notes'];
 
-  // Check if the username exists
-  if (userData.hasOwnProperty(username)) {
-      // Update the 'bag' property of the user data
-      userData[username]['notepads'] = updatedNotepads;
-      console.log("Successfully updated notes");
-      res.json({ message: 'notes updated successfully' });
-  } else {
-      res.status(404).json({ error: 'User not found' });
-  }
+  // // Check if the username exists
+  // if (userData.hasOwnProperty(username)) {
+  //     // Update the 'bag' property of the user data
+  //     userData[username]['notepads'] = updatedNotepads;
+  //     console.log("Successfully updated notes");
+  //     res.json({ message: 'notes updated successfully' });
+  // } else {
+  //     res.status(404).json({ error: 'User not found' });
+  // }
+
+  const data = req.body;
+  // const username = data['username'];
+  const updatedNotepads = data['notepads'];
+
+  // console.log("Data",data)
+  // console.log("Username",username)
+  console.log("Notepads",updatedNotepads)
+
+  const editedUser = DB.editUser(data,'notepads')
+  res.json(editedUser)
 });

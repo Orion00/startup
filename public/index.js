@@ -3,7 +3,7 @@
 // SAVING USERNAME AND PASSWORD
 
 // Login Button
-document.getElementById('login').addEventListener('submit', function (e) {
+document.getElementById('login').addEventListener('submit', async function (e) {
   e.preventDefault(); // Prevent form submission
 
   // Get username and password values
@@ -19,7 +19,8 @@ document.getElementById('login').addEventListener('submit', function (e) {
 
     console.log('Username (not password) saved to session storage.');
     updateIdentifier();
-    getUser(getGeneric(username));
+    let retrievedUserData = await getGeneric(username);
+    setStorage(retrievedUserData);
   } else {
     // Handle if username or password is empty
     console.log('Please enter both username and password.');
@@ -27,7 +28,7 @@ document.getElementById('login').addEventListener('submit', function (e) {
 });
   
 // CREATE BUTTON
-document.getElementById('createButton').addEventListener('click', function (e) {
+document.getElementById('createButton').addEventListener('click',async function (e) {
   e.preventDefault(); // Prevent form submission
 
   // Get username and password values
@@ -44,7 +45,8 @@ document.getElementById('createButton').addEventListener('click', function (e) {
     console.log('User created');
     updateIdentifier();
     createUser(username);
-    getUser(getGeneric(username));
+    let retrievedUserData = await getGeneric(username);
+    setStorage(retrievedUserData);
   } else {
     // Handle if username or password is empty
     console.log('Please enter both username and password.');
@@ -138,9 +140,10 @@ function getGeneric(username) {
     });
 }
 
-function getUser(user) {
+function setStorage(user) {
+  console.log("Our user is",user)
   localStorage.setItem('chaosContents', JSON.stringify(user['bag']));
-  localStorage.setItem('notes', JSON.stringify(user['notepads']));
+  localStorage.setItem('notepads', JSON.stringify(user['notepads']));
   localStorage.setItem('campaignData', JSON.stringify(user['campaigns']));
   localStorage.setItem('id', JSON.stringify(user['_id']));
 }

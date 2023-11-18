@@ -21,18 +21,18 @@ async function fetchData() {
         username = sessionStorage.getItem('username');
         console.log(username, "(Username)");
         await getNotes(username);
-        notes = JSON.parse(localStorage.getItem('notes'));
+        notes = JSON.parse(localStorage.getItem('notepads'));
         console.log(notes);
     } else {
         // If not logged in or no server information, check local storage
-        notes = JSON.parse(localStorage.getItem('notes'))
+        notes = JSON.parse(localStorage.getItem('notepads'))
 
         if (!notes) {
             // If both server and local storage are empty, use the default user
             await getNotes('test');
             console.log('Using default user');
         }
-        notes = JSON.parse(localStorage.getItem('notes'));
+        notes = JSON.parse(localStorage.getItem('notepads'));
         console.log(notes);
     }
 }
@@ -40,7 +40,7 @@ async function fetchData() {
 
 
 // ADDING NOTEBOOK Functions
-function addNote(notepadName,notepadText) {
+function addNote(notepadName,notepadText,first_time) {
     if (curr_notes >= max_notes) {
         alert("Error: Max notepads reached");
     } else {
@@ -78,8 +78,10 @@ function addNote(notepadName,notepadText) {
         //After creating the notepad, add to local storage
         //TODO: Add to DB too
         notes[notepadName] = notepadText;
-        localStorage.setItem('notes', JSON.stringify(notes));
-        updateBackendNotes(notes);
+        localStorage.setItem('notepads', JSON.stringify(notes));
+        
+        if (!first_time) {updateBackendNotes(notes);}
+
         console.log(notepadName,notepadText)
 
         let nButton1 = create('button',['btn','btn-success'],'Save');
@@ -114,7 +116,7 @@ function deleteElement(event) {
             const label = target.querySelector("label").textContent
             if (notes.hasOwnProperty(label)) {
                 delete notes[label]
-                localStorage.setItem('notes', JSON.stringify(notes));
+                localStorage.setItem('notepads', JSON.stringify(notes));
                 updateBackendNotes(notes);
             }
             
@@ -123,7 +125,7 @@ function deleteElement(event) {
             const label = parentColDiv.querySelector("label").textContent
             if (notes.hasOwnProperty(label)) {
                 delete notes[label]
-                localStorage.setItem('notes', JSON.stringify(notes));
+                localStorage.setItem('notepads', JSON.stringify(notes));
                 updateBackendNotes(notes);
             }
             if (parentColDiv) {
@@ -150,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Populates notepads based on local storage
 function updateNotes() {
     for (let n in notes) {
-        addNote(n, notes[n])
+        addNote(n, notes[n],true)
     }
 }
 
@@ -188,7 +190,7 @@ function makeEditable(event) {
                 const value = notes[originalText];
                 notes[input.value] = value;
                 delete notes[originalText];
-                localStorage.setItem('notes', JSON.stringify(notes));
+                localStorage.setItem('notepads', JSON.stringify(notes));
                 updateBackendNotes(notes);
             }
         }
@@ -217,7 +219,7 @@ function saveContent(event) {
         console.log('Textarea label:',formGroupLabel.textContent)
         console.log('Textarea content:', formGroupText.value);
         notes[formGroupLabel.textContent] = formGroupText.value;
-        localStorage.setItem('notes', JSON.stringify(notes));
+        localStorage.setItem('notepads', JSON.stringify(notes));
         updateBackendNotes(notes);
         
     } else {
@@ -244,7 +246,7 @@ function clearContent(event) {
         console.log('Textarea previous content:', formGroupText.value);
         formGroupText.value ='';
         notes[formGroupLabel.textContent] = formGroupText.value;
-        localStorage.setItem('notes', JSON.stringify(notes));
+        localStorage.setItem('notepads', JSON.stringify(notes));
         updateBackendNotes(notes);
     } else {
         // If the sibling element doesn't exist, handle accordingly
@@ -273,10 +275,11 @@ function getNotes(username) {
         return response.json();
       })
       .then((data) => {
-        console.log("Received data", data);
-        if (data && Object.keys(data).length > 0) {
-          localStorage.setItem('notes', JSON.stringify(data['notepads']));
-          console.log("Our data is", data['campaigns'])
+        console.log("Received data", data[0]);
+        if (data && Object.keys(data[0]).length > 0) {
+            let user = data[0];
+          localStorage.setItem('notepads', JSON.stringify(user['notepads']));
+          console.log("Our data is", user['notepads'])
         } else {
           // Handle the case where user data is empty
           console.error('User data is empty');

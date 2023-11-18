@@ -103,3 +103,13 @@ Currently those 3 save changes in local storage, I intend to add the changes to 
 **Backend service endpoints** Placeholders for login that stores the current user on the server. Missing GET and POST endpoints for chaos bag, campaign log, and notepads
 
 **Frontend calls service endpoints** Done using fetch
+
+### DB deliverable
+For this deliverable I stored created users and their data on a database.
+
+**MongoDB Atlas database created** Done
+
+**Endpoints for data** I finished storing username, chaos tokens, and campaigns in the database. For some reason the notes section is giving me trouble, so that's not working right now.
+
+**Stores data in MongoDBs** Almost done. See above.
+

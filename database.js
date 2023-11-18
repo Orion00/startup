@@ -40,11 +40,19 @@ async function editUser(data,key_to_update) {
       [key_to_update]: updatedvalue
     }
   };
-  console.log("Updating",username,"'s",key_to_update,"to")
-  console.log(updatedvalue)
+
+  const foundUser = await getUser(username);
+  console.log("Data is",data)
+  if (Object.keys(foundUser).length === 0) {
+    console.log(username,"not found")
+    return;
+  }
+
+  // console.log("Updating",username,"'s",key_to_update,"to")
+  // console.log(updatedvalue)
   const result = await users.updateOne(filter, update);
   console.log(`${result.modifiedCount} document(s) updated`);
-  console.log(result)
+  // console.log(result)
   return result
 }
 
