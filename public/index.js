@@ -142,6 +142,7 @@ function getUser(user) {
   localStorage.setItem('chaosContents', JSON.stringify(user['bag']));
   localStorage.setItem('notes', JSON.stringify(user['notepads']));
   localStorage.setItem('campaignData', JSON.stringify(user['campaigns']));
+  localStorage.setItem('id', JSON.stringify(user['_id']));
 }
 
   // TODO: Use local cache to create user instead of defaults

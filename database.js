@@ -30,13 +30,14 @@ async function createUser(user) {
     return result;
 }
 
+// TODO: Edit this to use ID instead of user
 async function editUser(data,key_to_update) {
   const username = data['username'];
   const updatedvalue = data[key_to_update];
   const filter = { username : username }
   const update = {
     $set: {
-      key_to_update: updatedvalue
+      [key_to_update]: updatedvalue
     }
   };
   console.log("Updating",username,"'s",key_to_update,"to")
