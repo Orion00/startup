@@ -19,18 +19,34 @@ const users = db.collection('users');
 
 function getUser(user_name) {
     const query = { username: user_name };
-    console.log("DB trying to find this username:", user_name)
+    //console.log("DB trying to find this username:", user_name)
     const cursor = users.find(query);
     return cursor.toArray();
 }
 
 async function createUser(user) {
-  console.log("DB Trying to create a user with this data", user)
+  //console.log("DB Trying to create a user with this data", user)
     const result = await users.insertOne(user)
     return result;
 }
 
+async function editUser(data,key_to_update) {
+  const username = data['username'];
+  const updatedvalue = data[key_to_update];
+  const filter = { username : username }
+  const update = {
+    $set: {
+      key_to_update: updatedvalue
+    }
+  };
+  console.log("Updating",username,"'s",key_to_update,"to")
+  console.log(updatedvalue)
+  const result = await users.updateOne(filter, update);
+  console.log(`${result.modifiedCount} document(s) updated`);
+  console.log(result)
+  return result
+}
 
 
 
-module.exports = { getUser, createUser };
+module.exports = { getUser, createUser, editUser };

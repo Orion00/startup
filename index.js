@@ -52,7 +52,6 @@ app.post('/createUser', async (req, res) => {
   const newUsername = Object.keys(newUser)[0];
 
   const foundUser = await DB.getUser(newUsername);
-  console.log("Creating a new user, this is our starting point",newUser)
   // Check if username exists
   if (Object.keys(foundUser).length === 0) {
     // Add user to DB
@@ -65,11 +64,8 @@ app.post('/createUser', async (req, res) => {
 
 // Get User
 app.get('/user', async (req, res) => {
-    console.log("We got this request",req.query)
     const username = req.query.username;
-    console.log("We got this username", username)
     const foundUser = await DB.getUser(username);
-    console.log("Found user", foundUser, typeof(foundUser))
     res.json(foundUser);
   });
 
@@ -81,36 +77,14 @@ app.post('/updateBag', (req, res) => {
   const username = data['username'];
   const updatedBag = data['bag'];
 
-  // Check if the username exists
-  if (userData.hasOwnProperty(username)) {
-      // Update the 'bag' property of the user data
-      userData[username]['bag'] = updatedBag;
-      console.log("Successfully updated the bag");
-      res.json({ message: 'Bag updated successfully' });
-  } else {
-      res.status(404).json({ error: 'User not found' });
-  }
+  // console.log("Data",data)
+  // console.log("Username",username)
+  console.log("Bag",updatedBag)
+
+  const editedUser = DB.editUser(data,'bag')
+  res.json(editedUser)
+  
 });
-
-// app.post('/createUser', async (req, res) => {
-//   // TODO: Replace with hashed password
-// const newPassword = "123";
-
-// const newUser = req.body;
-// newUser['hashedpassword'] = newPassword;
-// const newUsername = Object.keys(newUser)[0];
-
-// const foundUser = await DB.getUser(newUsername);
-// console.log("Creating a new user, this is our starting point",newUser)
-// // Check if username exists
-// if (Object.keys(foundUser).length === 0) {
-//   // Add user to DB
-//   DB.createUser(newUser)
-//   res.json({ message: 'User created successfully' });
-// } else {
-//   res.status(409).json({ error: 'Username already exists' });
-// }
-// });
 
 //// Campaign Log
 // Add, Remove, Save, Clear Campaigns

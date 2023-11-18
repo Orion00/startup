@@ -44,7 +44,7 @@ document.getElementById('createButton').addEventListener('click', function (e) {
     console.log('User created');
     updateIdentifier();
     createUser(username);
-    getUser(Generic(username));
+    getUser(getGeneric(username));
   } else {
     // Handle if username or password is empty
     console.log('Please enter both username and password.');
@@ -138,7 +138,7 @@ function getGeneric(username) {
     });
 }
 
-function getUser(username) {
+function getUser(user) {
   localStorage.setItem('chaosContents', JSON.stringify(user['bag']));
   localStorage.setItem('notes', JSON.stringify(user['notepads']));
   localStorage.setItem('campaignData', JSON.stringify(user['campaigns']));
