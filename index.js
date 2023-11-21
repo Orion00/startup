@@ -1,5 +1,7 @@
 "use strict"
-
+const uuid = require('uuid');
+const bcrypt = require('bcrypt');
+const cookieParser = require('cookie-parser');
 const DB = require('./database.js');
 const express = require('express');
 const app = express();
@@ -10,36 +12,37 @@ app.listen(4000, function() {console.log("Server is running")})
 
 
 // Endpoints
-app.use(express.json())
+app.use(cookieParser());
+app.use(express.json());
 
-let campaignData = {
-    'Night of the Zealot':{'Investigator':'Daisy Walker','Notes':""},
-    'Path to Carcosa':{'Investigator':'Mark Harrigan','Notes':""}
-};
+// let campaignData = {
+//     'Night of the Zealot':{'Investigator':'Daisy Walker','Notes':""},
+//     'Path to Carcosa':{'Investigator':'Mark Harrigan','Notes':""}
+// };
 
-let chaosContents = {"Eldersign": 1, 
-      "Autofail": 1, "0": 0, "1": 0, 
-      "bless": 0, "cultist":0, "curse":0, 
-      "elderthing":0,"minus1":0,"minus2":0,
-      "minus3":0,"minus4":0,"minus5":0,
-      "minus6":0,"minus7":0,"minus8":0,
-      "skull":0,"tablet":0};
+// let chaosContents = {"Eldersign": 1, 
+//       "Autofail": 1, "0": 0, "1": 0, 
+//       "bless": 0, "cultist":0, "curse":0, 
+//       "elderthing":0,"minus1":0,"minus2":0,
+//       "minus3":0,"minus4":0,"minus5":0,
+//       "minus6":0,"minus7":0,"minus8":0,
+//       "skull":0,"tablet":0};
 
-let notes = {
-    'Notepad 1':"",
-    'Notepad 2':"",
-};
+// let notes = {
+//     'Notepad 1':"",
+//     'Notepad 2':"",
+// };
 
-let userData = {
-    'test': {
-        'username': 'test',
-        'campaigns': campaignData,
-        'theme': 'default',
-        'notepads': notes,
-        'bag': chaosContents
-    }
+// let userData = {
+//     'test': {
+//         'username': 'test',
+//         'campaigns': campaignData,
+//         'theme': 'default',
+//         'notepads': notes,
+//         'bag': chaosContents
+//     }
     
-}
+// }
 
 //// User
 // Create User
@@ -61,6 +64,19 @@ app.post('/createUser', async (req, res) => {
     res.status(409).json({ error: 'Username already exists' });
   }
 });
+
+
+// app.post('/auth/create', async (req, res) => {
+//   if (await getUser(req.body.email)) {
+//     res.status(409).send({ msg: 'Existing user' });
+//   } else {
+//     const user = await createUser(req.body.email, req.body.password);
+//     setAuthCookie(res, user.token);
+//     res.send({
+//       id: user._id,
+//     });
+//   }
+// });
 
 // Get User
 app.get('/user', async (req, res) => {
