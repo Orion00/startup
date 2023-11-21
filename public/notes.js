@@ -275,9 +275,9 @@ function getNotes(username) {
         return response.json();
       })
       .then((data) => {
-        console.log("Received data", data[0]);
-        if (data && Object.keys(data[0]).length > 0) {
-            let user = data[0];
+        console.log("Received data", data);
+        if (data) {
+            let user = data;
           localStorage.setItem('notepads', JSON.stringify(user['notepads']));
           console.log("Our data is", user['notepads'])
         } else {

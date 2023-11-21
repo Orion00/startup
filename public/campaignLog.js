@@ -145,9 +145,9 @@ function getCampaigns(username) {
         return response.json();
       })
       .then((data) => {
-        console.log("Received data", data[0]);
-        if (data && Object.keys(data[0]).length > 0) {
-            let user = data[0];
+        console.log("Received data");
+        if (data) {
+            let user = data;
           localStorage.setItem('campaignData', JSON.stringify(user['campaigns']));
           console.log("Our data is", user['campaigns'])
         } else {

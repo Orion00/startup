@@ -21,16 +21,15 @@ const users = db.collection('users');
 
 async function getUser(user_name) {
     const query = { username: user_name };
-    const cursor = users.find(query);
-    return await cursor.toArray();
+    const cursor = users.findOne(query);
+    // return await cursor.toArray();
+    return await cursor
 }
 
 async function createUser(user) {
   const passwordHash = await bcrypt.hash(user.password, 10);
   user['password'] = passwordHash;
   user['token'] = uuid.v4()
-  console.log("Hashed pword",user.password)
-  console.log("Token",user.token)
   await users.insertOne(user)
   return user;
 }

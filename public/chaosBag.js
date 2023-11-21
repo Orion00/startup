@@ -243,9 +243,9 @@ function getChaosContents(username) {
         return response.json();
       })
       .then((data) => {
-        console.log("Received data", data[0]);
-        if (data && Object.keys(data[0]).length > 0) {
-          let user = data[0];
+        console.log("Received data", data);
+        if (data) {
+          let user = data;
           localStorage.setItem('chaosContents', JSON.stringify(user['bag']));
         } else {
           // Handle the case where user data is empty
