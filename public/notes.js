@@ -2,7 +2,7 @@
 let delete_mode = false;
 const max_notes = 4;
 let curr_notes = 0;
-let notes;
+let notepads;
 let username;
 
 //TODO: Add addNoteAndIncrement (like campaigns or chaos bag)
@@ -21,19 +21,19 @@ async function fetchData() {
         username = sessionStorage.getItem('username');
         console.log(username, "(Username)");
         await getNotes(username);
-        notes = JSON.parse(localStorage.getItem('notepads'));
-        console.log(notes);
+        notepads = JSON.parse(localStorage.getItem('notepads'));
+        console.log("notepads",notepads);
     } else {
         // If not logged in or no server information, check local storage
-        notes = JSON.parse(localStorage.getItem('notepads'))
+        notepads = JSON.parse(localStorage.getItem('notepads'))
 
-        if (!notes) {
+        if (!notepads) {
             // If both server and local storage are empty, use the default user
             await getNotes('test');
             console.log('Using default user');
         }
-        notes = JSON.parse(localStorage.getItem('notepads'));
-        console.log(notes);
+        notepads = JSON.parse(localStorage.getItem('notepads'));
+        console.log(notepads);
     }
 }
 
@@ -56,7 +56,7 @@ function addNote(notepadName,notepadText,first_time) {
 
         if (notepadName === undefined) {
             notepadName = `Notepad ${curr_notes}`
-            if (notes.hasOwnProperty(notepadName)) {
+            if (notepads.hasOwnProperty(notepadName)) {
                 notepadName += ' (1)'
             }
         }
@@ -77,10 +77,10 @@ function addNote(notepadName,notepadText,first_time) {
 
         //After creating the notepad, add to local storage
         //TODO: Add to DB too
-        notes[notepadName] = notepadText;
-        localStorage.setItem('notepads', JSON.stringify(notes));
+        notepads[notepadName] = notepadText;
+        localStorage.setItem('notepads', JSON.stringify(notepads));
         
-        if (!first_time) {updateBackendNotes(notes);}
+        if (!first_time) {updateBackendNotes(notepads);}
 
         console.log(notepadName,notepadText)
 
@@ -114,19 +114,19 @@ function deleteElement(event) {
             toggleDeleteMode();
             curr_notes -= 1;
             const label = target.querySelector("label").textContent
-            if (notes.hasOwnProperty(label)) {
-                delete notes[label]
-                localStorage.setItem('notepads', JSON.stringify(notes));
-                updateBackendNotes(notes);
+            if (notepads.hasOwnProperty(label)) {
+                delete notepads[label]
+                localStorage.setItem('notepads', JSON.stringify(notepads));
+                updateBackendNotes(notepads);
             }
             
         } else {
             const parentColDiv = target.closest('.col-lg.text-center');
             const label = parentColDiv.querySelector("label").textContent
-            if (notes.hasOwnProperty(label)) {
-                delete notes[label]
-                localStorage.setItem('notepads', JSON.stringify(notes));
-                updateBackendNotes(notes);
+            if (notepads.hasOwnProperty(label)) {
+                delete notepads[label]
+                localStorage.setItem('notepads', JSON.stringify(notepads));
+                updateBackendNotes(notepads);
             }
             if (parentColDiv) {
                 parentColDiv.remove();
@@ -151,8 +151,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Populates notepads based on local storage
 function updateNotes() {
-    for (let n in notes) {
-        addNote(n, notes[n],true)
+    for (let n in notepads) {
+        addNote(n, notepads[n],true)
     }
 }
 
@@ -186,12 +186,12 @@ function makeEditable(event) {
             label.textContent = input.value;
             console.log("Orig",originalText)
             console.log("New label",input.value)
-            if (originalText in notes) {
-                const value = notes[originalText];
-                notes[input.value] = value;
-                delete notes[originalText];
-                localStorage.setItem('notepads', JSON.stringify(notes));
-                updateBackendNotes(notes);
+            if (originalText in notepads) {
+                const value = notepads[originalText];
+                notepads[input.value] = value;
+                delete notepads[originalText];
+                localStorage.setItem('notepads', JSON.stringify(notepads));
+                updateBackendNotes(notepads);
             }
         }
         input.replaceWith(label);
@@ -218,9 +218,9 @@ function saveContent(event) {
     if (formGroupText) {
         console.log('Textarea label:',formGroupLabel.textContent)
         console.log('Textarea content:', formGroupText.value);
-        notes[formGroupLabel.textContent] = formGroupText.value;
-        localStorage.setItem('notepads', JSON.stringify(notes));
-        updateBackendNotes(notes);
+        notepads[formGroupLabel.textContent] = formGroupText.value;
+        localStorage.setItem('notepads', JSON.stringify(notepads));
+        updateBackendNotes(notepads);
         
     } else {
         // If the sibling element doesn't exist, handle accordingly
@@ -245,9 +245,9 @@ function clearContent(event) {
         // For example, you can modify or manipulate the sibling element
         console.log('Textarea previous content:', formGroupText.value);
         formGroupText.value ='';
-        notes[formGroupLabel.textContent] = formGroupText.value;
-        localStorage.setItem('notepads', JSON.stringify(notes));
-        updateBackendNotes(notes);
+        notepads[formGroupLabel.textContent] = formGroupText.value;
+        localStorage.setItem('notepads', JSON.stringify(notepads));
+        updateBackendNotes(notepads);
     } else {
         // If the sibling element doesn't exist, handle accordingly
         console.log("Error: Clear Button doesn't work");
@@ -293,7 +293,7 @@ function getNotes(username) {
       });
   }
 
-  function updateBackendNotes(notes) {
+  function updateBackendNotes(notepads) {
     if (checkIfLoggedIn()) {
         username = sessionStorage.getItem('username');
         const url = `/updateNotepads?username=${encodeURIComponent(username)}`;
@@ -304,7 +304,7 @@ function getNotes(username) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ username: username, notes: notes}),
+            body: JSON.stringify({ username: username, notepads: notepads}),
         })
         .then(response => {
             if (!response.ok) {
