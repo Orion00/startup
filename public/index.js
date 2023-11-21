@@ -44,7 +44,7 @@ document.getElementById('createButton').addEventListener('click',async function 
 
     console.log('User created');
     updateIdentifier();
-    createUser(username);
+    createUser(username,password);
     let retrievedUserData = await getGeneric(username);
     setStorage(retrievedUserData);
   } else {
@@ -118,6 +118,7 @@ function getGeneric(username) {
   return fetch(url)
     .then(response => {
       if (!response.ok) {
+        console.log("response not okay", response)
         throw new Error(`User not found for username: ${username}`);
       }
       return response.json();
@@ -149,7 +150,7 @@ function setStorage(user) {
 }
 
   // TODO: Use local cache to create user instead of defaults
-function createUser(username) {
+function createUser(username,password) {
   // Defaults
   let campaignData = {
       'Night of the Zealot':{'Investigator':'Daisy Walker','Notes':""}
@@ -170,6 +171,7 @@ function createUser(username) {
   
   let userData = {
           'username': username,
+          'password': password,
           'campaigns': campaignData,
           'theme': 'default',
           'notepads': notes,
@@ -177,7 +179,7 @@ function createUser(username) {
   }
 
   console.log("Sending out", userData)
-  fetch('/createUser', {
+  fetch('/auth/create', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

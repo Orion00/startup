@@ -1,6 +1,5 @@
 "use strict"
-const uuid = require('uuid');
-const bcrypt = require('bcrypt');
+
 const cookieParser = require('cookie-parser');
 const DB = require('./database.js');
 const express = require('express');
@@ -46,43 +45,57 @@ app.use(express.json());
 
 //// User
 // Create User
-app.post('/createUser', async (req, res) => {
-    // TODO: Replace with hashed password
-  const newPassword = "123";
+// app.post('/createUser', async (req, res) => {
+//     // TODO: Replace with hashed password
+//   const newPassword = "123";
 
-  const newUser = req.body;
-  newUser['hashedpassword'] = newPassword;
-  const newUsername = Object.keys(newUser)[0];
+//   const newUser = req.body;
+//   newUser['hashedpassword'] = newPassword;
+//   const newUsername = Object.keys(newUser)[0];
 
-  const foundUser = await DB.getUser(newUsername);
-  // Check if username exists
-  if (Object.keys(foundUser).length === 0) {
-    // Add user to DB
-    DB.createUser(newUser)
-    res.json({ message: 'User created successfully' });
+//   const foundUser = await DB.getUser(newUsername);
+//   // Check if username exists
+//   if (Object.keys(foundUser).length === 0) {
+//     // Add user to DB
+//     DB.createUser(newUser)
+//     res.json({ message: 'User created successfully' });
+//   } else {
+//     res.status(409).json({ error: 'Username already exists' });
+//   }
+// });
+app.post('/auth/create', async (req, res) => {
+  const userExists = await DB.getUser(req.body.username);
+  if (userExists && userExists.length > 0) {
+    res.status(409).send({ msg: 'Username already exists' });
   } else {
-    res.status(409).json({ error: 'Username already exists' });
+    const user = await DB.createUser(req.body);
+    setAuthCookie(res, user.token);
+    res.send({
+      id: user._id,
+      message: 'User created successfully'
+    });
   }
 });
 
-
-// app.post('/auth/create', async (req, res) => {
-//   if (await getUser(req.body.email)) {
-//     res.status(409).send({ msg: 'Existing user' });
-//   } else {
-//     const user = await createUser(req.body.email, req.body.password);
-//     setAuthCookie(res, user.token);
-//     res.send({
-//       id: user._id,
-//     });
-//   }
-// });
+function setAuthCookie(res, authToken) {
+  res.cookie('token', authToken, {
+    secure: true,
+    httpOnly: true,
+    sameSite: 'strict',
+  });
+}
 
 // Get User
 app.get('/user', async (req, res) => {
-    const username = req.query.username;
-    const foundUser = await DB.getUser(username);
-    res.json(foundUser);
+    // const username = req.query.username;
+    // const foundUser = await DB.getUser(username);
+    // res.json(foundUser);
+  const userExists = await DB.getUser(req.query.username);
+  if (userExists && userExists.length > 0) {
+    res.json(userExists);
+  } else {
+    res.status(404).send({ msg: 'Username not found' });
+  }
   });
 
 

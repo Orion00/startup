@@ -1,5 +1,7 @@
 const { MongoClient } = require('mongodb');
 const config = require('./dbConfig.json');
+const bcrypt = require('bcrypt');
+const uuid = require('uuid');
 
 const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
 const client = new MongoClient(url);
@@ -17,18 +19,23 @@ const users = db.collection('users');
   process.exit(1);
 });
 
-function getUser(user_name) {
+async function getUser(user_name) {
     const query = { username: user_name };
-    //console.log("DB trying to find this username:", user_name)
     const cursor = users.find(query);
-    return cursor.toArray();
+    return await cursor.toArray();
 }
 
 async function createUser(user) {
-  //console.log("DB Trying to create a user with this data", user)
-    const result = await users.insertOne(user)
-    return result;
+  const passwordHash = await bcrypt.hash(user.password, 10);
+  user['password'] = passwordHash;
+  user['token'] = uuid.v4()
+  console.log("Hashed pword",user.password)
+  console.log("Token",user.token)
+  await users.insertOne(user)
+  return user;
 }
+
+
 
 // TODO: Edit this to use ID instead of user
 async function editUser(data,key_to_update) {
