@@ -113,3 +113,14 @@ For this deliverable I stored created users and their data on a database.
 
 **Stores data in MongoDBs** Almost done. See above.
 
+### Login Deliverable
+For this deliverable I connected users to the DB.
+
+**User registration** Creates a new user in the database.
+
+**Existing user** Stores campaign data, notes, and chaos bag when editing them if logged in.
+
+**Use MongoDB to store credentials** Stores user and hashed password.
+
+**Restricts functionality** I want users to be able to use my app without being logged in for convenience. Users not logged in have a default campaign, notes, and chaos bag saved in local storage but not in the DB.
+
