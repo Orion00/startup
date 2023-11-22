@@ -20,10 +20,9 @@ const users = db.collection('users');
 });
 
 async function getUser(user_name) {
-    const query = { username: user_name };
-    const cursor = users.findOne(query);
-    // return await cursor.toArray();
-    return await cursor
+  const query = { username: user_name };
+  const user = await users.findOne(query);
+  return user || null;
 }
 
 async function createUser(user) {
@@ -47,19 +46,19 @@ async function editUser(data,key_to_update) {
     }
   };
 
-  const foundUser = await getUser(username);
-  console.log("Data is",data)
-  if (Object.keys(foundUser).length === 0) {
-    console.log(username,"not found")
-    return;
-  }
+    const foundUser = await getUser(username);
+    console.log("Data is",data)
+    if (Object.keys(foundUser).length === 0) {
+      console.log(username,"not found")
+      return;
+    }
 
-  // console.log("Updating",username,"'s",key_to_update,"to")
-  // console.log(updatedvalue)
-  const result = await users.updateOne(filter, update);
-  console.log(`${result.modifiedCount} document(s) updated`);
-  // console.log(result)
-  return result
+    // console.log("Updating",username,"'s",key_to_update,"to")
+    // console.log(updatedvalue)
+    const result = await users.updateOne(filter, update);
+    console.log(`${result.modifiedCount} document(s) updated`);
+    // console.log(result)
+    return result
 }
 
 

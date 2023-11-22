@@ -113,22 +113,23 @@ document.addEventListener('DOMContentLoaded',getQuote())
 // HTTP Requests
 let user = {}
 
-async function getGeneric(username) {
+// async function getGeneric(username) {
 
-  const url = `/user?username=${encodeURIComponent(username)}`;
-  const response = await fetch(url)
-  console.log("Response from server is",response.response)
-   if (response.ok) {
-    return response
-   } else {
-    // TODO: Figure out what this returns
-    return;
-   }
+//   const url = `/user?username=${encodeURIComponent(username)}`;
+//   return fetch(url).
+//   // const response = await fetch(url)
+//   // console.log("Response from server is",response.body)
+//   //  if (response.ok) {
+//   //   return response
+//   //  } else {
+//   //   // TODO: Figure out what this returns
+//   //   return;
+//   //  }
   
-//   if (!response.ok) {
+//   then((response) => {if (!response.ok) {
 //     console.log("response not okay", response)
 //     throw new Error(`User not found for username: ${username}`);
-//   }
+//   }}).
 // then((data) => {
 //       console.log("Received data", data);
 //       if (data) {
@@ -144,7 +145,35 @@ async function getGeneric(username) {
 //       // Display a user-friendly message to the user
 //       alert("Username not found. Please check your username and try again.");
 //     });
+// }
+
+async function getGeneric(username) {
+  const url = `/user?username=${encodeURIComponent(username)}`;
+
+  try {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`User not found for username: ${username}`);
+    }
+
+    const data = await response.json();
+
+    if (data) {
+      return data;
+    } else {
+      console.error('User data is empty');
+      // Possibly handle empty data here
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    // Display a user-friendly message to the user
+    alert("Username not found. Please check your username and try again.");
+    return null;
+  }
 }
+
 
 function setStorage(user) {
   console.log("Our user is",user)

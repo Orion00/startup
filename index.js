@@ -100,7 +100,8 @@ app.post('/auth/login', async (req, res) => {
     }
   } else {
     res.status(404).send({ msg: 'Username not found' });
-    throw console.error('Username not found');
+    console.error('Username not found');
+    return
   }
   
 });
@@ -114,9 +115,8 @@ app.get('/user', async (req, res) => {
   console.log("userExists",userExists)
   if (userExists) {
     delete userExists.password;
-    const jsonContent = JSON.stringify(userExists)
-    res.json(userExists)
-    return userExists;
+    res.setHeader('Content-Type', 'application/json');
+    res.json(userExists);
   } else {
     res.status(404).send({ msg: 'Username not found' });
   }
