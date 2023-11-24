@@ -70,26 +70,29 @@ function updateIdentifier() {
 // FAKE WEBSOCKET RANDOM GENERATION
 // 4 digit number
 function generateRandomNumber() {
-  return Math.floor(1000 + Math.random() * 9000);
+  return Math.floor(Math.random() * 4);
 }
 
-function updateOtherUserText() {
+function updateOtherUserText(newName) {
   const randomNumber = generateRandomNumber();
   const otherUserDiv = document.getElementById('otheruser');
 
-  otherUserDiv.textContent = `User${randomNumber} just logged in`;
+  switch (randomNumber) {
+    case 0:
+      otherUserDiv.textContent = `User ${newName} just logged in`;
+      break;
+    case 1:
+      otherUserDiv.textContent = `Happy to see you ${newName}!`;
+      break;
+    case 2:
+      otherUserDiv.textContent = `User ${newName} just joined us`;
+      break;
+    case 3:
+      otherUserDiv.textContent = `Watch out! ${newName} is here to party`;
+      break;
+  }
 }
 
-// Initial call to update the text
-updateOtherUserText();
-
-// Function to update text at random intervals between 20 and 30 seconds
-function randomizeOtherUserText() {
-  setInterval(updateOtherUserText, Math.floor(2000 + Math.random() * 2000));
-}
-
-// Start the interval
-randomizeOtherUserText();
 
 
 // External API
@@ -246,5 +249,37 @@ async function login(user_name,password) {
     updateIdentifier();
     let retrievedUserData = await getGeneric(user_name);
     setStorage(retrievedUserData);
+    sendMessage()
+  }
+}
+
+// Websocket Functions
+// Adjust the webSocket protocol to what is being used for HTTP
+const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+const socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+
+// Display that we have opened the webSocket
+socket.onopen = (event) => {
+  // appendMsg('system', 'websocket', 'connected');
+  console.log("We've connected to the web socket")
+};
+
+// Display messages we receive from our friends
+socket.onmessage = async (event) => {
+  const text = await event.data.text();
+  const username = JSON.parse(text);
+  updateOtherUserText(username.name)
+};
+
+// If the webSocket is closed then disable the interface
+socket.onclose = (event) => {
+  console.log("We've closed the connection")
+};
+
+// Send a message over the webSocket
+function sendMessage() {
+  const username = document.getElementById('name').value;
+  if (!!username) {
+    socket.send(`{"name":"${username}"}`);
   }
 }

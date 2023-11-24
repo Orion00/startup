@@ -3,14 +3,17 @@ const bcrypt = require('bcrypt');
 const cookieParser = require('cookie-parser');
 const DB = require('./database.js');
 const express = require('express');
+const { peerProxy } = require('./peerProxy.js');
 const app = express();
 
 // Serve Website
 app.use(express.static('public'))
-app.listen(4000, function() {console.log("Server is running")})
+const httpService = app.listen(4000, function() {console.log("Server is running")})
 
 
-// Endpoints
+
+// Trust headers that are forwarded from the proxy so we can determine IP addresses
+app.set('trust proxy', true);
 app.use(cookieParser());
 app.use(express.json());
 
@@ -63,6 +66,8 @@ app.use(express.json());
 //     res.status(409).json({ error: 'Username already exists' });
 //   }
 // });
+
+// Endpoints
 app.post('/auth/create', async (req, res) => {
   const userExists = await DB.getUser(req.body.username);
   if (userExists) {
@@ -156,3 +161,5 @@ app.post('/updateNotepads', (req, res) => {
   const editedUser = DB.editUser(data,'notepads')
   res.json(editedUser)
 });
+
+peerProxy(httpService);
