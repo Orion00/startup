@@ -124,3 +124,10 @@ For this deliverable I connected users to the DB.
 
 **Restricts functionality** I want users to be able to use my app without being logged in for convenience. Users not logged in have a default campaign, notes, and chaos bag saved in local storage but not in the DB.
 
+### Websocket Deliverable
+For this deliverable I used websockets to show when other users logged in.
+
+**Backend listens for WebSocket connection** Done
+**Frontend makes WebSocket connection** Done
+**Data sent over WebSocket connection** Done
+**WebSocket data displayed** Login page updates div text when receiving websocket info
