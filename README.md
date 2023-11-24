@@ -128,6 +128,9 @@ For this deliverable I connected users to the DB.
 For this deliverable I used websockets to show when other users logged in.
 
 **Backend listens for WebSocket connection** Done
+
 **Frontend makes WebSocket connection** Done
+
 **Data sent over WebSocket connection** Done
+
 **WebSocket data displayed** Login page updates div text when receiving websocket info
