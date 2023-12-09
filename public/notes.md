@@ -20,6 +20,9 @@ scp -i ~/keys/production.pem [file to be copied] ubuntu@35.171.205.9:/public_htm
 ./deployService.sh -k ~/keys/production.pem -h tinyproject.click -s simon
 ./deployService.sh -k ~/keys/production.pem -h tinyproject.click -s startup
 
+./deployReact.sh -k ~/keys/production.pem -h tinyproject.click -s simon
+./deployReact.sh -k ~/keys/production.pem -h tinyproject.click -s startup
+
 Startup Features:
 -Random joke
 -Drink pointer (randomized arrow that says where to put your drink)
@@ -52,7 +55,6 @@ TODO:
 -(Chaos Bag) Make Adding token not jumpy when it doesn't exist (Make it invisible?)
 -(Index) Theme change (local cache save theme name and then manually change every src to use that folder)
 -(Notes) Char limit to renaming note pads
--(Notes) Connect clear and save buttons to database
 -(Notes) Fix adding more than 1 duplicate notepad name breaks things
 
 DB should store campaign log and chaos bag in Campaign folder. Last played date and time and notepad should be per player.
