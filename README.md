@@ -1,136 +1,70 @@
-# ArkhamHandDB
-[Current iteration](https://startup.tinyproject.click/)
+# Getting Started with Create React App
 
-## Specifications
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-### Elevator Pitch
-Have you ever wanted an extra hand while playing Fantasy Flight's Arkham Horror: The Card Game? Well, now you've got one. Need someone to point to where you left your drink? ArkhamHand's got you. Need a random token or item? ArkhamHand's got you. Need a log of the last time you played, a place for new deck ideas, a campaign log, or just somewhere to remember which part of the heist you've pulled off? ArkhamHand's got your back. Figuratively. Mostly figuratively. Use ArkhamHand to simplify your Arkham experience.
+## Available Scripts
 
-### Design
-Homepage
-![Homepage](/Assets/Mockup/Home.png)
-Chaos token bag
-![Chaos bag](/Assets/Mockup/ChaosBag.png)
-Drink finder
-![Drink pointer](/Assets/Mockup/DrinkPointer.png)
-Campaign Log
-![Campaign log](/Assets/Mockup/CampaignLog.png)
-Notepad
-![Notepad](/Assets/Mockup/Notepad.png)
-List randomizer
-![List page](/Assets/Mockup/RandomList.png)
+In the project directory, you can run:
 
-### Key Features
-- Last played time and date
-- Random Arkham joke/meme each login
-- Drink pointer outer
-- Chaos Bag Puller 
-- Campaign Log
-- Notepad for new deck ideas and "remember that..." prompts
-- Randomly select Location/Item from a list
-- Deckbuilding hopefully (Grabbing DB from someone who has scanned all 2,000 cards)
+### `npm start`
 
-### Technologies Used
-**HTML:** Builds the 6 HTML pages needed, with hyperlinks on each page to lead to each other page
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-**CSS:** Used to display well on different screen sizes, freshens up appearance
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-**JS:** Allows login, editing chaos bag, campaign log, and notepad
+### `npm test`
 
-**Authentication:** Users login to access preferences and personal features
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-**Database data:** User's last played time and date, user's last chaos bag setup, user's last campaign log, and user's notepad are all saved on a database.
+### `npm run build`
 
-**WebSocket:** Sends a notification to other users when someone else logs on
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-**React:** Used for simpler website building
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-### HTML Deliverables
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-For this deliverable I built out the structure of my application using HTML.
+### `npm run eject`
 
-**HTML pages:** One page for each function of the website. Home page, 3 randomizers (Chaos bag, drink finder, and random list), and 2 notes pages (Campaign log and notes)
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-**Links:** The home page links to each other page, the rest have a head that contains a navigation bar.
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-**Text:** Not a ton of straight text, most of it is contained on the home page
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-**Images:** Static images for now, but I want to swap them out based on the theme a user has chosen (for example, in Chaos bag)
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-**Login:** Login is available in the header on each page
+## Learn More
 
-**Database:** Database will store last time visited, preferred theme, and notes. Static text exists there for now.
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-**WebSocket:** Header will display when someone else logs on. Static text exists there for now.
+To learn React, check out the [React documentation](https://reactjs.org/).
 
-### CSS Deliverables
+### Code Splitting
 
-For this deliverable I used primarily bootstrap to make the website worth looking at for more than 10 seconds.
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-**Header, footer, and main content body** It exists and is consistent
+### Analyzing the Bundle Size
 
-**Navigation elements** I changed the color for my one link, and built a nav bar at the top. Unfortunately I think it needs JS when it resizes so the menu doesn't drop down yet.
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-**Responsive to window resizing** Website designed to fit well on phones and monitors
+### Making a Progressive Web App
 
-**Application elements** Used consistent colors and a theme
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-**Application text content** No change to default bootstrap fonts, I'll add this later if I have time
+### Advanced Configuration
 
-**Application images** Plenty of images, all responsive to screen size
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-### JS Deliverables
+### Deployment
 
-**Future Login** I've got a login box that saves username and password in session storage for now. Don't know how to check against database yet.
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-**Future Database Data** Currently console.logging all information other than username and password I'd like to save besides the campaigns page, where it's stored in local storage.
+### `npm run build` fails to minify
 
-**Future Websocket** "User####" text on homepage currently generates a random username every 2-4 seconds. I plan to have only the most recent logged on user show up.
-
-**Interaction Logic** Notepad names are editable. Almost all buttons animate, save, clear, randomize, and anything else advertised. Still working on stir bag, pull token, add campaign, and remove campaign. (Liberal use of ChatGPT to debug and learning how to write functions. It's also far better at documenting code than I am)
-
-### Service deliverable
-For this deliverable I added several front and backend endpoints to communicate user information.
-I didn't have time to add calls for chaos bag updating, campaign log updating, or notepad updating.
-Currently those 3 save changes in local storage, I intend to add the changes to the server as well in the next few days.
-
-**Node.js/Express HTTP service** Started
-
-**Static middleware for frontend** Done
-
-**Calls to third party endpoints** Simple random quote API on home page
-
-**Backend service endpoints** Placeholders for login that stores the current user on the server. Missing GET and POST endpoints for chaos bag, campaign log, and notepads
-
-**Frontend calls service endpoints** Done using fetch
-
-### DB deliverable
-For this deliverable I stored created users and their data on a database.
-
-**MongoDB Atlas database created** Done
-
-**Endpoints for data** I finished storing username, chaos tokens, and campaigns in the database. For some reason the notes section is giving me trouble, so that's not working right now.
-
-**Stores data in MongoDBs** Almost done. See above.
-
-### Login Deliverable
-For this deliverable I connected users to the DB.
-
-**User registration** Creates a new user in the database.
-
-**Existing user** Stores campaign data, notes, and chaos bag when editing them if logged in.
-
-**Use MongoDB to store credentials** Stores user and hashed password.
-
-**Restricts functionality** I want users to be able to use my app without being logged in for convenience. Users not logged in have a default campaign, notes, and chaos bag saved in local storage but not in the DB.
-
-### Websocket Deliverable
-For this deliverable I used websockets to show when other users logged in.
-
-**Backend listens for WebSocket connection** Done
-
-**Frontend makes WebSocket connection** Done
-
-**Data sent over WebSocket connection** Done
-
-**WebSocket data displayed** Login page updates div text when receiving websocket info
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
