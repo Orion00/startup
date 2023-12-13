@@ -5,9 +5,16 @@ import { AuthState } from './authState';
 import { Authenticated } from './authenticated';
 
 // Fix Logout to use API Request
-// Fix Login/craete to use API Request
+// Fix Login and create API Requests
+// Make WS actually connect
 
 export function Login({ username, authState, onAuthChange }) {
+  const [wsMsg, setWSMsg] = React.useState('');
+
+  const onWSChange = (e) => {
+    setWSMsg(e);
+  };
+
     return (
         // {authState !== AuthState.Unknown && <h1>Welcome to Simon</h1>}
         <div className="row bg-success text-white align-items-center">
@@ -15,17 +22,17 @@ export function Login({ username, authState, onAuthChange }) {
 
               {authState === AuthState.Unauthenticated && (
               <Unauthenticated
-                username={username}
+                username={username} wsMsg={wsMsg}
                 onLogin={(loginUsername) => {
                   onAuthChange(loginUsername, AuthState.Authenticated);
                 }}
+                onWSChange={(newWsMsg) => {setWSMsg(newWsMsg)}}
               />
             )}
-            {authState === AuthState.Authenticated && (<Authenticated username={username} onLogout={() => onAuthChange(username, AuthState.Unauthenticated)}/>)}
             {authState === AuthState.Authenticated && (
-          <Authenticated username={username} onLogout={() => onAuthChange(username, AuthState.Unauthenticated)} />
-        )}
-          <WebsocketMessage />
+              <Authenticated username={username} 
+              onLogout={() => onAuthChange(username, AuthState.Unauthenticated)}/>)}
+          <WebsocketMessage wsMsg={wsMsg}/>
         </div>
     )
 }

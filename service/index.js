@@ -92,6 +92,8 @@ function setAuthCookie(res, authToken) {
 
 app.post('/auth/login', async (req, res) => {
   const user = await DB.getUser(req.body.username);
+  console.log("This is the user we found while using /login")
+  console.log(user)
   if (user) {
     //console.log("Password matchup",req.body.password, user.password)
     if (await bcrypt.compare(req.body.password, user.password)) {
@@ -113,6 +115,8 @@ app.post('/auth/login', async (req, res) => {
 
 // Get User
 app.get('/user', async (req, res) => {
+  console.log("This is the user we found while using /user")
+  console.log(user)
     // const username = req.query.username;
     // const foundUser = await DB.getUser(username);
     // res.json(foundUser);

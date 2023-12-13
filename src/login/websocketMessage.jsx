@@ -1,7 +1,6 @@
 import React from 'react';
 
-export function WebsocketMessage() {
-    const [wsMsg, setWSMsg] = React.useState('words');
+export function WebsocketMessage({wsMsg}) {
 
     // Adjust the webSocket protocol to what is being used for HTTP
     const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
@@ -55,7 +54,12 @@ export function WebsocketMessage() {
         }
       }
 
-    return (
-          <div className="col-sm">{wsMsg}</div>
-    )
+      if (wsMsg!=="") {
+        return (
+        <div className="col-sm">
+      <div>{wsMsg} just joined us</div>
+      </div>
+        )
+    }
+
 }
