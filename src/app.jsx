@@ -8,21 +8,24 @@ import { CampaignLog } from './campaignLog/campaignLog';
 import { Notes } from './notes/notes';
 import { RandomList } from './randomList/randomList';
 import { Credits } from './credits/credits';
+import { Login } from './login/login';
+import { AuthState } from './login/authState';
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
 
 export default function App() {
+	const [username, setUsername] = React.useState(localStorage.getItem('userName') || '');
+	const [chaosContents, setChaosContents] = React.useState(localStorage.getItem('chaosContents') || '');
+	const [notepads, setNotepads] = React.useState(localStorage.getItem('notepads') || '');
+	const [campaignData, setCampaignData] = React.useState(localStorage.getItem('campaignData') || '');
+	const [userId, setUserId] = React.useState(localStorage.getItem('userId') || '');
+
+	const currentAuthState = username ? AuthState.Authenticated : AuthState.Unauthenticated;
+  	const [authState, setAuthState] = React.useState(currentAuthState);
+
 return (
-// <nav className='navbar fixed-top navbar-dark'>
-//         <div className='navbar-brand'>
-//           Simon<sup>&reg;</sup>
-//         </div>
-//         <menu className='navbar-nav'>
-		//   <li className='nav-item'>
-			
-		//   </li>
 <BrowserRouter>
 <header>
 <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -43,14 +46,18 @@ return (
 		</div>
 	</div>
 	</nav>
+	<Login username={username} authState={authState} onAuthChange={(username, authState) => {
+                  setAuthState(authState);
+                  setUserName(username);
+                }}/>
 	</header>
 
 	<Routes>
-          <Route path='/' element={<Home />} exact />
-          <Route path='/chaosBag' element={<ChaosBag />} />
+          <Route path='/' element={<Home username={username}/>} exact />
+          <Route path='/chaosBag' element={<ChaosBag userId={userId} chaosContents={chaosContents}/>} />
           <Route path='/drinkPointer' element={<DrinkPointer />} />
-          <Route path='/campaignLog' element={<CampaignLog />} />
-		  <Route path='/notes' element={<Notes />} />
+          <Route path='/campaignLog' element={<CampaignLog userId={userId} campaignData={campaignData}/>} />
+		  <Route path='/notes' element={<Notes userId={userId} notepads={notepads}/>} />
           <Route path='/randomList' element={<RandomList />} />
 		  <Route path='/credits' element={<Credits />} />
           <Route path='*' element={<NotFound />} />

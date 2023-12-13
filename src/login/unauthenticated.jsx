@@ -1,69 +1,49 @@
 import React from 'react';
-
 import Button from 'react-bootstrap/Button';
-import {MessageDialog} from './messageDialog';
 
 export function Unauthenticated(props) {
-  const [userName, setUserName] = React.useState(props.userName);
-  const [password, setPassword] = React.useState('');
-  const [displayError, setDisplayError] = React.useState(null);
+    const [username, setUsername] = React.useState(props.username);
+    const [password, setPassword] = React.useState('');
 
-  async function loginUser() {
-    loginOrCreate(`/api/auth/login`);
-  }
+    function loginUser() {
 
-  async function createUser() {
-    loginOrCreate(`/api/auth/create`);
-  }
-
-  async function loginOrCreate(endpoint) {
-    const response = await fetch(endpoint, {
-      method: 'post',
-      body: JSON.stringify({email: userName, password: password}),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-      },
-    });
-    if (response?.status === 200) {
-      localStorage.setItem('userName', userName);
-      props.onLogin(userName);
-    } else {
-      const body = await response.json();
-      setDisplayError(`⚠ Error: ${body.msg}`);
     }
-  }
 
-  return (
-    <>
-      <div>
-        <div className='input-group mb-3'>
-          <span className='input-group-text'>@</span>
-          <input
-            className='form-control'
-            type='text'
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
-            placeholder='your@email.com'
-          />
-        </div>
-        <div className='input-group mb-3'>
-          <span className='input-group-text'>🔒</span>
-          <input
-            className='form-control'
-            type='password'
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder='password'
-          />
-        </div>
-        <Button variant='primary' onClick={() => loginUser()}>
-          Login
-        </Button>
-        <Button variant='secondary' onClick={() => createUser()}>
-          Create
-        </Button>
-      </div>
+    function createUser() {
+        
+    }
 
-      <MessageDialog message={displayError} onHide={() => setDisplayError(null)} />
-    </>
-  );
+    return (
+        <div className="col-sm">
+            <div className='row g-1 align-items-center'>
+                <div className="col-auto">
+                    <label htmlFor="name" className="col-form-label">Username</label>
+                </div>
+                <div className="col-auto">
+                    <input type="text" value={username} id="name" className="form-control" onChange={(e) => setUsername(e.target.value)} name="login" placeholder="Username" autoComplete="username" aria-describedby="passwordHelpInline" />
+                </div>
+            </div>
+
+            <div className='row g-2 align-items-center'>
+                <div className="col-auto">
+                    <label htmlFor="password" className="col-form-label">Password</label>
+                </div>
+                <div className="col-auto">
+                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} id="password" className="form-control" placeholder="password" autoComplete="current-password" aria-describedby="passwordHelpInline" />
+                </div>
+            </div>
+
+            <div className='row g-0 align-items-center'>
+                <div className="col-auto">
+                    <Button variant="light" onClick={() => loginUser()}>Login</Button>
+                </div>
+                <div className="col-auto">
+                    <Button variant="dark" onClick={() => createUser()}>Create</Button>
+                </div>
+            </div>
+        
+        
+
+    </div>
+    )
 }

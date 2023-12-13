@@ -9,6 +9,7 @@ function peerProxy(httpServer) {
   httpServer.on('upgrade', (request, socket, head) => {
     wss.handleUpgrade(request, socket, head, function done(ws) {
       wss.emit('connection', ws, request);
+      console.log("Upgraded to websocket");
     });
   });
 
@@ -18,10 +19,12 @@ function peerProxy(httpServer) {
   wss.on('connection', (ws) => {
     const connection = { id: uuid.v4(), alive: true, ws: ws };
     connections.push(connection);
+    console.log("Connected to websocket")
 
     // Forward messages to everyone except the sender
     ws.on('message', function message(data) {
       connections.forEach((c) => {
+        console.log("Sending message through websocket")
         if (c.id !== connection.id) {
           c.ws.send(data);
         }
@@ -31,11 +34,11 @@ function peerProxy(httpServer) {
     // Remove the closed connection so we don't try to forward anymore
     ws.on('close', () => {
       connections.findIndex((o, i) => {
+        console.log("Closing connection to websocket");
         if (o.id === connection.id) {
           connections.splice(i, 1);
           return true;
         }
-        return false;
       });
     });
 

@@ -1,26 +1,25 @@
 import React from 'react';
-
+import { WebsocketMessage } from './websocketMessage';
 import { Unauthenticated } from './unauthenticated';
-import { Authenticated } from './authenticated';
 import { AuthState } from './authState';
+import { Authenticated } from './authenticated';
 
-export function Login({ userName, authState, onAuthChange }) {
-  return (
-    <main className='container-fluid bg-secondary text-center'>
-      <div>
-        {authState !== AuthState.Unknown && <h1>Welcome to Simon</h1>}
-        {authState === AuthState.Authenticated && (
-          <Authenticated userName={userName} onLogout={() => onAuthChange(userName, AuthState.Unauthenticated)} />
-        )}
-        {authState === AuthState.Unauthenticated && (
-          <Unauthenticated
-            userName={userName}
-            onLogin={(loginUserName) => {
-              onAuthChange(loginUserName, AuthState.Authenticated);
-            }}
-          />
-        )}
-      </div>
-    </main>
-  );
+export function Login({ username, authState, onAuthChange }) {
+    return (
+      // {authState !== AuthState.Unknown && <h1>Welcome to Simon</h1>}
+        <div className="row bg-success text-white align-items-center">
+          {authState === AuthState.Unknown && <h1>Welcome to Simon</h1>}
+
+              {authState === AuthState.Unauthenticated && (
+              <Unauthenticated
+                username={username}
+                onLogin={(loginUsername) => {
+                  onAuthChange(loginUsername, AuthState.Authenticated);
+                }}
+              />
+            )}
+            {authState === AuthState.Authenticated && (<Authenticated username={username}/>)}
+          <WebsocketMessage />
+        </div>
+    )
 }
