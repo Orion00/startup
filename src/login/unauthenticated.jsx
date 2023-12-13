@@ -5,13 +5,23 @@ export function Unauthenticated(props) {
     const [username, setUsername] = React.useState(props.username);
     const [password, setPassword] = React.useState('');
 
-    function loginUser() {
-
-    }
-
-    function createUser() {
-        
-    }
+    async function loginOrCreateUser(choice) {
+        if (username.trim() !== '' && password.trim() !== '') {
+            // Add fetch request
+            //If successful, update root username
+            props.onLogin(username)
+        }
+    }  
+//   // Check if username and password are not empty
+//   if (username.trim() !== '' && password.trim() !== '') {
+//     // Store username in session storage
+//     const encodedUsername = encodeURIComponent(username);
+//     // sessionStorage.setItem('username', encodedUsername);
+//     let retrievedUserData = await login(username,password);
+//   } else {
+//     // Handle if username or password is empty
+//     console.log('Please enter both username and password.');
+//   }
 
     return (
         <div className="col-sm">
@@ -35,15 +45,21 @@ export function Unauthenticated(props) {
 
             <div className='row g-0 align-items-center'>
                 <div className="col-auto">
-                    <Button variant="light" onClick={() => loginUser()}>Login</Button>
+                    <Button variant="light" onClick={() => loginOrCreateUser("Login")}>Login</Button>
                 </div>
                 <div className="col-auto">
-                    <Button variant="dark" onClick={() => createUser()}>Create</Button>
+                    <Button variant="dark" onClick={() => loginOrCreateUser("Create")}>Create</Button>
                 </div>
             </div>
-        
-        
-
+            <div value={username}>Username is {username}</div>
+            <input
+            className='form-control'
+            type='text'
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder='your@email.com'
+          />
     </div>
+
     )
 }

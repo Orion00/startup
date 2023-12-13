@@ -16,7 +16,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
 
 export default function App() {
-	const [username, setUsername] = React.useState(localStorage.getItem('userName') || '');
+	const [username, setUsername] = React.useState(localStorage.getItem('username') || '');
 	const [chaosContents, setChaosContents] = React.useState(localStorage.getItem('chaosContents') || '');
 	const [notepads, setNotepads] = React.useState(localStorage.getItem('notepads') || '');
 	const [campaignData, setCampaignData] = React.useState(localStorage.getItem('campaignData') || '');
@@ -48,9 +48,10 @@ return (
 	</nav>
 	<Login username={username} authState={authState} onAuthChange={(username, authState) => {
                   setAuthState(authState);
-                  setUserName(username);
+                  setUsername(username);
                 }}/>
 	</header>
+
 
 	<Routes>
           <Route path='/' element={<Home username={username}/>} exact />
