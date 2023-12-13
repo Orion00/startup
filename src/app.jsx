@@ -1,91 +1,81 @@
 import React from 'react';
+
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
-import { Login } from './login/login';
-import { Play } from './play/play';
-import { Scores } from './scores/scores';
-import { About } from './about/about';
-import { AuthState } from './login/authState';
+import { Home } from './home/home'
+import { ChaosBag } from './chaosBag/chaosBag'
+import { DrinkPointer } from './drinks/drinkPointer';
+import { CampaignLog } from './campaignLog/campaignLog';
+import { Notes } from './notes/notes';
+import { RandomList } from './randomList/randomList';
+import { Credits } from './credits/credits';
+
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
 
-function App() {
-  const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
-  const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
-  const [authState, setAuthState] = React.useState(currentAuthState);
+export default function App() {
+return (
+// <nav className='navbar fixed-top navbar-dark'>
+//         <div className='navbar-brand'>
+//           Simon<sup>&reg;</sup>
+//         </div>
+//         <menu className='navbar-nav'>
+		//   <li className='nav-item'>
+			
+		//   </li>
+<BrowserRouter>
+<header>
+<nav className="navbar navbar-expand-lg navbar-light bg-light">
+	<div className="container-fluid">
+		<a className="navbar-brand">Arkham Hand</a>
+		<button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+		<span className="navbar-toggler-icon"></span>
+		</button>
+		<div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+		<div className="navbar-nav">
+			<NavLink className='nav-link' aria-current="page" to=''>Login</NavLink>
+			<NavLink className="nav-link" aria-current="page" to="chaosBag">Chaos Bag</NavLink>
+			<NavLink className="nav-link" aria-current="page" to="drinkPointer">Drinks</NavLink>
+			<NavLink className="nav-link" aria-current="page" to="campaignLog">Campaign Log</NavLink>
+			<NavLink className="nav-link" aria-current="page" to="notes">Notes</NavLink>
+			<NavLink className="nav-link" aria-current="page" to="randomList">Random List</NavLink>
+		</div>
+		</div>
+	</div>
+	</nav>
+	</header>
 
-  return (
-    <BrowserRouter>
-      <div className='body bg-dark text-light'>
-        <header className='container-fluid'>
-          <nav className='navbar fixed-top navbar-dark'>
-            <div className='navbar-brand'>
-              Simon<sup>&reg;</sup>
-            </div>
-            <menu className='navbar-nav'>
-              <li className='nav-item'>
-                <NavLink className='nav-link' to=''>
-                  Login
-                </NavLink>
-              </li>
-              {authState === AuthState.Authenticated && (
-                <li className='nav-item'>
-                  <NavLink className='nav-link' to='play'>
-                    Play
-                  </NavLink>
-                </li>
-              )}
-              {authState === AuthState.Authenticated && (
-                <li className='nav-item'>
-                  <NavLink className='nav-link' to='scores'>
-                    Scores
-                  </NavLink>
-                </li>
-              )}
-              <li className='nav-item'>
-                <NavLink className='nav-link' to='about'>
-                  About
-                </NavLink>
-              </li>
-            </menu>
-          </nav>
-        </header>
-
-        <Routes>
-          <Route
-            path='/'
-            element={
-              <Login
-                userName={userName}
-                authState={authState}
-                onAuthChange={(userName, authState) => {
-                  setAuthState(authState);
-                  setUserName(userName);
-                }}
-              />
-            }
-            exact
-          />
-          <Route path='/play' element={<Play userName={userName} />} />
-          <Route path='/scores' element={<Scores />} />
-          <Route path='/about' element={<About />} />
+	<Routes>
+          <Route path='/' element={<Home />} exact />
+          <Route path='/chaosBag' element={<ChaosBag />} />
+          <Route path='/drinkPointer' element={<DrinkPointer />} />
+          <Route path='/campaignLog' element={<CampaignLog />} />
+		  <Route path='/notes' element={<Notes />} />
+          <Route path='/randomList' element={<RandomList />} />
+		  <Route path='/credits' element={<Credits />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
 
-        <footer className='bg-dark text-dark text-muted'>
-          <div className='container-fluid'>
-            <span className='text-reset'>Author Name(s)</span>
-            <a className='text-reset' href='https://github.com/webprogramming260/simon-react'>
-              Source
-            </a>
+		<footer>
+        <div className="row bg-success text-white align-items-center text-center">
+          <div className="col-sm">
+            Created by Orion Bowers
           </div>
-        </footer>
-      </div>
-    </BrowserRouter>
-  );
+          <div className="col-sm">
+            <a className="nav-link" href="https://github.com/Orion00/startup">GitHub</a>
+          </div>
+          <div className="col-sm">
+			<NavLink className={"nav-link"} to="credits">ImageCredits</NavLink>
+			{/* TODO: Find our what this was used for in image credits? */}
+			{/* className='navigationList */}
+          </div>
+        </div>        
+      </footer>
+	</BrowserRouter>
+)
 }
 
+// TODO: Fix this to match the rest of the theme
 function NotFound() {
-  return <main className='container-fluid bg-secondary text-center'>404: Return to sender. Address unknown.</main>;
-}
-
-export default App;
+	return <main className='container-fluid bg-secondary text-center'>404: Return to sender. Address unknown.</main>;
+  }
