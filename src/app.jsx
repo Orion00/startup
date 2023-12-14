@@ -21,9 +21,16 @@ export default function App() {
 	const [notepads, setNotepads] = React.useState(localStorage.getItem('notepads') || '');
 	const [campaignData, setCampaignData] = React.useState(localStorage.getItem('campaignData') || '');
 	const [userId, setUserId] = React.useState(localStorage.getItem('userId') || '');
+	const [theme, setTheme] = React.useState(localStorage.getItem('theme') || 'generic')
 
 	const currentAuthState = username ? AuthState.Authenticated : AuthState.Unauthenticated;
   	const [authState, setAuthState] = React.useState(currentAuthState);
+
+	//In Theme Box, use this
+	// <button onClick={() => changeTheme('newTheme')}>Change Theme</button>
+	const changeTheme = (newTheme) => {
+		setTheme(newTheme);
+	  };
 
 return (
 <BrowserRouter>
@@ -54,7 +61,7 @@ return (
 
 
 	<Routes>
-          <Route path='/' element={<Home username={username}/>} exact />
+          <Route path='/' element={<Home username={username} theme={theme}/>} exact />
           <Route path='/chaosBag' element={<ChaosBag userId={userId} chaosContents={chaosContents}/>} />
           <Route path='/drinkPointer' element={<DrinkPointer />} />
           <Route path='/campaignLog' element={<CampaignLog userId={userId} campaignData={campaignData}/>} />

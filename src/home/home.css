@@ -1,0 +1,9 @@
+.bullet {
+    width: 20%;
+  }
+
+  .bullet_link {
+    display: inline;
+    color: seagreen;
+    text-decoration: none;
+  }

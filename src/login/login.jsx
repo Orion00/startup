@@ -7,6 +7,7 @@ import { Authenticated } from './authenticated';
 // Fix Logout to use API Request
 // Fix Login and create API Requests
 // Make WS actually connect
+// Fix logout to change overall username
 
 export function Login({ username, authState, onAuthChange }) {
   const [wsMsg, setWSMsg] = React.useState('');
