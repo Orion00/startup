@@ -11,7 +11,8 @@ export function Home({username, theme}) {
           <div className="container bg-light align-items-center">
             <div className="row">
               <div className="col-sm text-center">
-                <h1 id="identifier">Welcome {username}</h1>
+                <br />
+                <h1>Welcome {username}</h1>
                 <h2>Would you like a hand...</h2>
               </div>
           </div>
@@ -58,31 +59,6 @@ export function Home({username, theme}) {
           </div>
 
           <Quote />
-{/*         
-        
-
-
-            <div class="row align-items-center">
-              <div class="col-sm">
-                <a href="randomList.html"><img class="bullet" src="Assets/Themes/generic/Palm.png"></a>
-                <a href="randomList.html" class="nav-link bullet_link">Randomly selecting something?</a>
-              </div>
-              <div class="col-sm">
-              </div>
-          </div>
-
-          <div class="row align-items-center">
-            <div class="col-sm text-center">
-              <img class="center meme" src="Assets/ChaosBagMeme.jpeg">
-            </div>
-          </div>
-          <div class="row align-items-center">
-            <div class="col-sm text-center">
-              <p id="quote-text">Loading...</p>
-            </div>
-          </div>
-          <br>
-        </div> */}
         </div>
     </main>
     );

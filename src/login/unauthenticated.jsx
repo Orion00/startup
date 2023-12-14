@@ -72,10 +72,10 @@ function create() {
         <div className="col-sm">
             <div className='row g-1 align-items-center'>
                 <div className="col-auto">
-                    <label htmlFor="name" className="col-form-label">Username</label>
+                    <label htmlFor="name" className="col-form-label form-control-label-sm">Username</label>
                 </div>
                 <div className="col-auto">
-                    <input type="text" value={username} id="name" className="form-control" onChange={(e) => setUsername(e.target.value)} name="login" placeholder="Username" autoComplete="username" aria-describedby="passwordHelpInline" />
+                    <input type="text" value={username} id="name" className="form-control form-control-sm" onChange={(e) => setUsername(e.target.value)} name="login" placeholder="Username" autoComplete="username" aria-describedby="passwordHelpInline" />
                 </div>
             </div>
 
@@ -84,7 +84,7 @@ function create() {
                     <label htmlFor="password" className="col-form-label">Password</label>
                 </div>
                 <div className="col-auto">
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} id="password" className="form-control" placeholder="password" autoComplete="current-password" aria-describedby="passwordHelpInline" />
+                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} id="password" className="form-control form-control-sm" placeholder="password" autoComplete="current-password" aria-describedby="passwordHelpInline" />
                 </div>
             </div>
 
