@@ -20,7 +20,7 @@ export default function App() {
 	const [chaosContents, setChaosContents] = React.useState(localStorage.getItem('chaosContents') || '');
 	const [notepads, setNotepads] = React.useState(localStorage.getItem('notepads') || '');
 	const [campaignData, setCampaignData] = React.useState(localStorage.getItem('campaignData') || '');
-	const [userId, setUserId] = React.useState(localStorage.getItem('userId') || '');
+	const [userId, setUserId] = React.useState(localStorage.getItem('id') || '');
 	const [theme, setTheme] = React.useState(localStorage.getItem('theme') || 'generic')
 
 	const currentAuthState = username ? AuthState.Authenticated : AuthState.Unauthenticated;
@@ -56,7 +56,8 @@ return (
 	<Login username={username} authState={authState} onAuthChange={(username, authState) => {
                   setAuthState(authState);
                   setUsername(username);
-                }}/>
+                }}
+			chaosContents={chaosContents} notepads={notepads} campaignData={campaignData} theme={theme}/>
 	</header>
 
 

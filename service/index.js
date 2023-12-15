@@ -116,7 +116,7 @@ app.post('/auth/login', async (req, res) => {
 // Get User
 app.get('/user', async (req, res) => {
   console.log("This is the user we found while using /user")
-  console.log(user)
+  console.log(req.query.username)
     // const username = req.query.username;
     // const foundUser = await DB.getUser(username);
     // res.json(foundUser);
