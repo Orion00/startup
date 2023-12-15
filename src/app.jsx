@@ -63,7 +63,7 @@ return (
 
 	<Routes>
           <Route path='/' element={<Home username={username} theme={theme}/>} exact />
-          <Route path='/chaosBag' element={<ChaosBag userId={userId} chaosContents={chaosContents}/>} />
+          <Route path='/chaosBag' element={<ChaosBag userId={userId} chaosContents={chaosContents} theme={theme}/>} />
           <Route path='/drinkPointer' element={<DrinkPointer />} />
           <Route path='/campaignLog' element={<CampaignLog userId={userId} campaignData={campaignData}/>} />
 		  <Route path='/notes' element={<Notes userId={userId} notepads={notepads}/>} />

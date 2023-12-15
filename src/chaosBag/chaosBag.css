@@ -1,0 +1,15 @@
+.meme {
+    width: 75%;
+    max-width: 350px;
+  }
+
+  .token {
+    width: 50%;
+    max-width: 70px;
+  }
+
+  .pulled {
+    transform: translate(0%, 125%);
+    visibility: hidden;
+    opacity: 0;
+  }
