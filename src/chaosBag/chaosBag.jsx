@@ -4,6 +4,13 @@ import { Token } from './token';
 
 export function ChaosBag({userId,chaosContents,theme}) {
     const handImagePath = `Assets/Themes/${theme}/Grab.png`;
+
+    const tokenComponents = Object.keys(chaosContents).flatMap(tokenName => {
+        const quantity = chaosContents[tokenName];
+        return Array.from({ length: quantity }, (_, index) => (
+          <Token key={`${tokenName}-${index}`} tokenName={tokenName} />
+        ));
+      });
     return (
         <main className="container-fluid bg-secondary">
         <div className="container bg-light align-items-center">
@@ -48,24 +55,24 @@ export function ChaosBag({userId,chaosContents,theme}) {
                       <div className="modal-body">
                         <div className="col-sm">
                             {/* addTokenAndIncrement */}
-                          <Token number={'Eldersign'} />
-                          <Token number={'Autofail'} />
-                          <Token number={1} />
-                          <Token number={0} />
-                          <Token number={'minus1'} />
-                          <Token number={'minus2'} />
-                          <Token number={'minus3'} />
-                          <Token number={'minus4'} />
-                          <Token number={'minus5'} />
-                          <Token number={'minus6'} />
-                          <Token number={'minus7'} />
-                          <Token number={'minus8'} />
-                          <Token number={'skull'} />
-                          <Token number={'cultist'} />
-                          <Token number={'tablet'} />
-                          <Token number={'elderthing'} />
-                          <Token number={'bless'} />
-                          <Token number={'curse'} />
+                          <Token tokenName={'Eldersign'} />
+                          <Token tokenName={'Autofail'} />
+                          <Token tokenName={1} />
+                          <Token tokenName={0} />
+                          <Token tokenName={'minus1'} />
+                          <Token tokenName={'minus2'} />
+                          <Token tokenName={'minus3'} />
+                          <Token tokenName={'minus4'} />
+                          <Token tokenName={'minus5'} />
+                          <Token tokenName={'minus6'} />
+                          <Token tokenName={'minus7'} />
+                          <Token tokenName={'minus8'} />
+                          <Token tokenName={'skull'} />
+                          <Token tokenName={'cultist'} />
+                          <Token tokenName={'tablet'} />
+                          <Token tokenName={'elderthing'} />
+                          <Token tokenName={'bless'} />
+                          <Token tokenName={'curse'} />
                         </div>
                       </div>
                     </div>
@@ -78,7 +85,7 @@ export function ChaosBag({userId,chaosContents,theme}) {
 
             <div className="row align-items-center">
               <div className="col-sm bag">
- 
+                {tokenComponents}
               </div>
       </div>
       <br />

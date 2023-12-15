@@ -5,6 +5,7 @@ import { createRoutesFromChildren } from 'react-router-dom';
 export function Unauthenticated(props) {
     const [username, setUsername] = React.useState(props.username);
     const [password, setPassword] = React.useState('');
+    const [chaosContents, setChaosContents] = React.useState(props.chaosContents);
 
 async function loginOrCreate(choice) {
     if (username.trim() === '' || password.trim() === '') {
@@ -50,8 +51,8 @@ async function loginOrCreate(choice) {
         try {
           let retrievedUserData = await getGeneric(username);
           console.log("Retrieved user data is", retrievedUserData);
-          setStorage(retrievedUserData);
           if (retrievedUserData !== null) {
+            setStorage(retrievedUserData);
             props.onLogin(username);
             props.onWSChange(username);
           }
@@ -95,11 +96,13 @@ async function loginOrCreate(choice) {
     function setStorage(user) {
         console.log("Our user is",user)
         localStorage.setItem('username',user['username']);
-        localStorage.setItem('chaosContents', user['bag']);
-        localStorage.setItem('notepads', user['notepads']);
-        localStorage.setItem('campaignData', user['campaigns']);
+        localStorage.setItem('chaosContents', JSON.stringify(user['bag']));
+        localStorage.setItem('notepads', JSON.stringify(user['notepads']));
+        localStorage.setItem('campaignData', JSON.stringify(user['campaigns']));
         localStorage.setItem('theme', user['theme']);
         localStorage.setItem('id', user['_id']);
+
+        props.onChaosChange(user['bag']);
       }
 
 

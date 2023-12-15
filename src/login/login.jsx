@@ -9,12 +9,13 @@ import { Authenticated } from './authenticated';
 // Make WS actually connect
 // Fix logout to change overall username
 
-export function Login({ username, authState, onAuthChange, chaosContents, notepads, campaignData, theme }) {
+export function Login({ username, authState, onAuthChange, chaosContents, notepads, campaignData, theme, onChaosChange }) {
   const [wsMsg, setWSMsg] = React.useState('');
 
   const onWSChange = (e) => {
     setWSMsg(e);
   };
+
 
     return (
         // {authState !== AuthState.Unknown && <h1>Welcome to Simon</h1>}
@@ -28,11 +29,12 @@ export function Login({ username, authState, onAuthChange, chaosContents, notepa
                   onAuthChange(loginUsername, AuthState.Authenticated);
                 }}
                 onWSChange={(newWsMsg) => {setWSMsg(newWsMsg)}}
-                chaosContents={chaosContents} notepads={notepads} campaignData={campaignData} theme={theme}/>
+                notepads={notepads} campaignData={campaignData} theme={theme} chaosContents={chaosContents}
+                onChaosChange={() => onChaosChange(updatedChaosContents)}/>
             )}
             {authState === AuthState.Authenticated && (
               <Authenticated username={username} 
-              onLogout={() => onAuthChange(username, AuthState.Unauthenticated)}/>)}
+              onLogout={() => onAuthChange(username, AuthState.Unauthenticated, chaosContents)}/>)}
           <WebsocketMessage wsMsg={wsMsg}/>
         </div>
     )

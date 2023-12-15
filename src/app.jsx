@@ -16,12 +16,21 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
 
 export default function App() {
+	const storedChaosContents = localStorage.getItem('chaosContents');
+	const parsedChaosContents = storedChaosContents ? JSON.parse(storedChaosContents) : {};
+
+	const storedNotepads = localStorage.getItem('notepads');
+	const parsedNotepads = storedNotepads ? JSON.parse(storedNotepads) : {};
+
+	const storedCampaignData = localStorage.getItem('campaignData');
+	const parsedCampaignData = storedCampaignData ? JSON.parse(storedCampaignData) : {};
+
 	const [username, setUsername] = React.useState(localStorage.getItem('username') || '');
-	const [chaosContents, setChaosContents] = React.useState(localStorage.getItem('chaosContents') || '');
-	const [notepads, setNotepads] = React.useState(localStorage.getItem('notepads') || '');
-	const [campaignData, setCampaignData] = React.useState(localStorage.getItem('campaignData') || '');
+	const [chaosContents, setChaosContents] = React.useState(parsedChaosContents);
+	const [notepads, setNotepads] = React.useState(parsedNotepads);
+	const [campaignData, setCampaignData] = React.useState(parsedCampaignData);
 	const [userId, setUserId] = React.useState(localStorage.getItem('id') || '');
-	const [theme, setTheme] = React.useState(localStorage.getItem('theme') || 'generic')
+	const [theme, setTheme] = React.useState(localStorage.getItem('theme') || 'generic');
 
 	const currentAuthState = username ? AuthState.Authenticated : AuthState.Unauthenticated;
   	const [authState, setAuthState] = React.useState(currentAuthState);
@@ -30,6 +39,10 @@ export default function App() {
 	// <button onClick={() => changeTheme('newTheme')}>Change Theme</button>
 	const changeTheme = (newTheme) => {
 		setTheme(newTheme);
+	  };
+	
+	const onChaosChange = (updatedChaosContents) => {
+		setChaosContents(updatedChaosContents);
 	  };
 
 return (
@@ -57,7 +70,8 @@ return (
                   setAuthState(authState);
                   setUsername(username);
                 }}
-			chaosContents={chaosContents} notepads={notepads} campaignData={campaignData} theme={theme}/>
+			onChaosChange={chaosContents}
+			chaosContents={chaosContents}  notepads={notepads} campaignData={campaignData} theme={theme}/>
 	</header>
 
 
