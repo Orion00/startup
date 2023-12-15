@@ -1,12 +1,44 @@
 import React from 'react';
 import './campaignLog.css';
 
-export function CampaignLog({userId, campaignData, onCampaignDataChange}) {
+// TODO: Update to update DB and local storage
 
+export function CampaignLog({userId, campaignData, onCampaignDataChange}) {
+    const [selectedCampaign, setSelectedCampaign] = React.useState('');
+    const [Notes, setNotes] = React.useState('');
+
+    // Update textarea when selectedCampaign changes
+    React.useEffect(() => {
+        if (selectedCampaign !== '') {
+        setNotes(campaignData[selectedCampaign].Notes);
+        }
+    }, [selectedCampaign, campaignData]);
+
+    // Function to handle updating campaignData
     const updateCampaign = () => {
-        const updatedData = "words to replace";
-        onCampaignDataChange(updatedData);
+        const updatedCampaignData = {
+        ...campaignData,
+        [selectedCampaign]: {
+            ...campaignData[selectedCampaign],
+            Notes: Notes,
+        },
+        };
+        onCampaignDataChange(updatedCampaignData);
+    };
+
+    const clearCampaign = () => {
+        setSelectedCampaign('');
+        setNotes('');
+        onCampaignDataChange({
+            ...campaignData,
+            [selectedCampaign]: {
+              ...campaignData[selectedCampaign],
+              Notes: '',
+            },
+          });
       };
+
+    const campaignKeys = Object.keys(campaignData);
 
     return (
         <main className="container-fluid bg-secondary hovcur">
@@ -19,13 +51,37 @@ export function CampaignLog({userId, campaignData, onCampaignDataChange}) {
 
       <div className="row">
         <div className="col-lg text-center">
-          <div className="form-group">
-            <select id="campaignSelector" className="form-select col-md" aria-label="Campaign selector">
-            </select>
-            <textarea className="form-control" id="campaignnotes" rows="3"></textarea>
-        </div>
-          <button type="submit" className="btn btn-success save" onClick={updateCampaign}>Save</button>
-          <button type="submit" className="btn btn-danger clear">Clear</button>
+          
+        <div className="form-group">
+        <select
+          id="campaignSelector"
+          className="form-select col-md"
+          aria-label="Campaign selector"
+          value={selectedCampaign}
+          onChange={(e) => setSelectedCampaign(e.target.value)}
+        >
+          <option value="">Select a campaign</option>
+          {campaignKeys.map((campaign) => (
+            <option key={campaign} value={campaign}>
+              {campaign} - {campaignData[campaign].Investigator}
+            </option>
+          ))}
+        </select>
+        <textarea
+          className="form-control"
+          id="campaignnotes"
+          rows="3"
+          value={Notes}
+          onChange={(e) => setNotes(e.target.value)}
+        ></textarea>
+      </div>
+      <button type="button" className="btn btn-success save" onClick={updateCampaign}>
+        Save
+      </button>
+      <button type="button" className="btn btn-danger clear" onClick={clearCampaign}>
+        Clear
+      </button>
+          
           <button type="submit" className="btn btn-dark add" data-bs-toggle="modal" data-bs-target="#addModal">Add campaign</button>
           {/* onclick="removeCampaign() */}
           <button type="submit" className="btn btn-secondary remove">Remove campaign</button>
