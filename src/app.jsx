@@ -44,6 +44,10 @@ export default function App() {
 	const onChaosChange = (updatedChaosContents) => {
 		setChaosContents(updatedChaosContents);
 	  };
+	
+	// const onUpdateNotepads = (updatedNotepads) => {
+	// 	setChaosContents(updatedNotepads);
+	//   };
 
 return (
 <BrowserRouter>
@@ -80,7 +84,7 @@ return (
           <Route path='/chaosBag' element={<ChaosBag userId={userId} chaosContents={chaosContents} theme={theme}/>} />
           <Route path='/drinkPointer' element={<DrinkPointer theme={theme}/>} />
           <Route path="/campaignLog" element={<CampaignLog userId={userId} campaignData={campaignData} onCampaignDataChange={(newCampaignData) => {setCampaignData(newCampaignData);}}/>}/>
-		  <Route path='/notes' element={<Notes userId={userId} notepads={notepads}/>} />
+		  <Route path='/notes' element={<Notes userId={userId} notepads={notepads} onUpdateNotepads={(updatedNotepads) => {setNotepads(updatedNotepads);}}/>} />
           <Route path='/randomList' element={<RandomList />} />
 		  <Route path='/credits' element={<Credits />} />
           <Route path='*' element={<NotFound />} />
