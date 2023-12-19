@@ -387,3 +387,166 @@ What will the following code using Promises output when executed?
     ```
     
     }
+
+### Final Review "Study" Guide
+
+What ports are used for HTTP, HTTPS, SSH?
+
+    SSH: 22
+    HTTP: 80
+    HTTPS: 443
+
+What do HTTP status codes in the 300, 400, 500 range indicate?
+
+    300: Redirection
+    400: Client Error
+    500: Server Error
+
+What does the HTTP header content-type allows you to do?
+
+    Specifies the nature or type of data sent out
+    Content-Type := type "/" subtype *[";" parameter] 
+    type :=          "application"     / "audio" 
+                    / "image"           / "message" 
+                    / "multipart"  / "text" 
+                    / "video"           / x-token 
+
+What do the following attributes of a cookie do?
+
+    Domain: Specifies which server can receive the cookie (mozilla.org can do dev.mozilla.org)
+    Path: Specifies what path must be in the URL to send the cookie (/docs)
+    SameSite: Only sends cookies on this same site or one you navigate to from this one
+    HTTPOnly: Allows cookie to not be accessed by client side scripts
+
+Assuming the following Express middleware, what would be the console.log output for an HTTP GET request with a URL path of /foo/bar?
+
+    ?
+
+Given the following Express service code: What does the following JavaScript fetch return?
+
+    ?
+
+Given the following MongoDB query
+```
+{ cost: { $gt: 10 }, name: /fran.*/}
+```
+select all of the matching documents.
+
+    REGEX: Name starts with "fran" and cost is > $10
+
+How should you store user passwords in a database?
+
+    Hashed and Salted. Like every good chips and cheese snack.
+
+Assuming the following Node.js service code is executing with websockets, what will be logged to the console of the web browser?
+
+    ?
+
+What is the WebSocket protocol used for?
+
+    Clients talking to other clients
+
+What is JSX and how are the curly braces rendered?
+
+    JavaScript XML.
+    Used to inject JS for variables, functions, or conditional rendering
+
+Assuming a HTML document with a 
+    <div id="root"></div>
+    element, what content will the following React component generate?
+        function Welcome(props) {
+            return <h1>Hello, {props.name}</h1>;
+        }
+        function App() {
+            return (
+            <div>
+                <Welcome name="Sara" />
+                <Welcome name="Cahal" />
+                <Welcome name="Edite" />
+            </div>
+            );
+        }
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+
+        Hello, Sara
+        Hello, Cahal
+        Hello, Edite
+
+Assuming a HTML document with a 
+    <div id="root"></div>
+    element, what content will the following React component generate?
+        function Numbers() { 
+        const numbers = [1, 2, 3, 4, 5];
+        const listItems = numbers.map((number) =>
+            <li>{number}</li>
+        );
+        return(<ul>{listItems}</ul>)
+        }
+        const root = ReactDOM.createRoot(document.getElementById('root')); 
+        root.render(<Numbers/>);
+
+    Unordered list of 1-5
+
+What does the following React component do?
+    function Example() {
+    // Declare a new state variable, which we'll call "count"  
+    const [count, setCount] = useState(0);
+    return (
+        <div>
+        <p>You clicked {count} times</p>
+        <button onClick={() => setCount(count + 1)}>
+            Click me
+        </button>
+        </div>
+    );
+    }
+
+    Increments when someone clicks. It updated the state.
+
+What are React Hooks used for?
+
+    Functions used to update state variables
+
+What is the useEffect hook used for?
+
+    Runs every render, Runs On First Render [], Runs when dependencies change and on first render [dep]
+
+What does this code do?
+
+    export default function App() {
+    return (
+        <BrowserRouter>
+        <Routes>
+            <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="blogs" element={<Blogs />} />
+            <Route path="contact" element={<Contact />} />
+            <Route path="*" element={<NoPage />} />
+            </Route>
+        </Routes>
+        </BrowserRouter>
+    );
+    }
+
+    Tells React what component to render when you click somewhere
+
+What role does npm play in web development?
+
+    It's a package manager to handle and update new packages
+
+What does package.json do in a npm project?
+
+    Keeps track of dependencies and reproducibility
+
+What does the fetch function do?
+
+    Makes an HTTP request
+
+What does node.js do?
+
+    Allows us to run JS on server
+
+What does Vite do?
+
+    It's a development server, production builder that helps things be efficient
