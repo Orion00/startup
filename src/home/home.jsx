@@ -4,7 +4,7 @@ import './home.css';
 import { Quote } from './quote';
 
 export function Home({username, theme}) {
-  const imagePath = `Assets/Themes/${theme}/Palm.png`;
+  const imagePath = `helper-assets/Themes/${theme}/Palm.png`;
 
     return (
         <main className="container-fluid bg-secondary">

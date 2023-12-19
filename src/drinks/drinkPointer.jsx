@@ -3,7 +3,7 @@ import React from 'react';
 import './drinkPointer.css';
 
 export function DrinkPointer({theme}) {
-    const imagePath = `/Assets/Themes/${theme}/Point.png`;
+    const imagePath = `/helper-assets/Themes/${theme}/Point.png`;
     const [animationInProgress, setAnimation] = React.useState(true)
     const [randomDegree, setRandomDegree] = React.useState(0);
 

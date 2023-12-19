@@ -3,7 +3,7 @@ import './chaosBag.css';
 import { Token } from './token';
 
 export function ChaosBag({userId,chaosContents,theme}) {
-    const handImagePath = `Assets/Themes/${theme}/Grab.png`;
+    const handImagePath = `helper-assets/Themes/${theme}/Grab.png`;
 
     const tokenComponents = Object.keys(chaosContents).flatMap(tokenName => {
         const quantity = chaosContents[tokenName];
@@ -29,12 +29,12 @@ export function ChaosBag({userId,chaosContents,theme}) {
 
           <div className="row align-items-center text-center">
             <div className="col-sm token-spot">
-              <img className="token pulled" src="Assets/Chaos Bag/0.png" />
+              <img className="token pulled" src="helper-assets/Chaos Bag/0.png" />
             </div>
           </div>
           <div className="row align-items-center text-center">
             <div className="col-sm">
-              <img className="meme bag-image" src="/Assets/Chaos Bag/Bag1b.png" />
+              <img className="meme bag-image" src="/helper-assets/Chaos Bag/Bag1b.png" />
             </div>
           </div>
             <div className="row align-items-center text-center">
