@@ -30,7 +30,7 @@ export function Login({ username, authState, onAuthChange, chaosContents, notepa
                 }}
                 onWSChange={(newWsMsg) => {setWSMsg(newWsMsg)}}
                 notepads={notepads} campaignData={campaignData} theme={theme} chaosContents={chaosContents}
-                onChaosChange={() => onChaosChange(updatedChaosContents)}/>
+                onChaosChange={(updatedChaosContents) => onChaosChange(updatedChaosContents)}/>
             )}
             {authState === AuthState.Authenticated && (
               <Authenticated username={username} 

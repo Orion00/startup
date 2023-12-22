@@ -41,8 +41,9 @@ export default function App() {
 		setTheme(newTheme);
 	  };
 	
-	const onChaosChange = (updatedChaosContents) => {
+	const updateChaosContents = (updatedChaosContents) => {
 		setChaosContents(updatedChaosContents);
+		localStorage.setItem('chaosContents', JSON.stringify(updatedChaosContents));
 	  };
 	
 	// const onUpdateNotepads = (updatedNotepads) => {
@@ -74,14 +75,14 @@ return (
                   setAuthState(authState);
                   setUsername(username);
                 }}
-			onChaosChange={chaosContents}
+			onChaosChange={updateChaosContents}
 			chaosContents={chaosContents}  notepads={notepads} campaignData={campaignData} theme={theme}/>
 	</header>
 
 
 	<Routes>
           <Route path='/' element={<Home username={username} theme={theme}/>} exact />
-          <Route path='/chaosBag' element={<ChaosBag userId={userId} chaosContents={chaosContents} theme={theme}/>} />
+          <Route path='/chaosBag' element={<ChaosBag userId={userId} chaosContents={chaosContents} theme={theme} onChaosChange={updateChaosContents}/>} />
           <Route path='/drinkPointer' element={<DrinkPointer theme={theme}/>} />
           <Route path="/campaignLog" element={<CampaignLog userId={userId} campaignData={campaignData} onCampaignDataChange={(newCampaignData) => {setCampaignData(newCampaignData);}}/>}/>
 		  <Route path='/notes' element={<Notes userId={userId} notepads={notepads} onUpdateNotepads={(updatedNotepads) => {setNotepads(updatedNotepads);}}/>} />

@@ -2,15 +2,36 @@ import React from 'react';
 import './chaosBag.css';
 import { Token } from './token';
 
-export function ChaosBag({userId,chaosContents,theme}) {
+export function ChaosBag({userId,chaosContents,theme, onChaosChange}) {
     const handImagePath = `helper-assets/Themes/${theme}/Grab.png`;
+    const changeChaosTokens = (tokenName, choice) => {
+      console.log("Token name is",tokenName,"number is",chaosContents[tokenName])
+      if (choice === "add") {
+        chaosContents[tokenName] += 1;
+      } else if(choice === "remove") {
+        chaosContents[tokenName] -= 1;
+      }
+      console.log("Token name is",tokenName,"number is now",chaosContents[tokenName])
+      onChaosChange(chaosContents);
+    }
 
     const tokenComponents = Object.keys(chaosContents).flatMap(tokenName => {
-        const quantity = chaosContents[tokenName];
-        return Array.from({ length: quantity }, (_, index) => (
-          <Token key={`${tokenName}-${index}`} tokenName={tokenName} />
-        ));
-      });
+      const quantity = chaosContents[tokenName];
+      console.log("Using basic")
+      return Array.from({ length: quantity }, (_, index) => (
+        <Token key={`${tokenName}-${index}`} tokenName={tokenName} removeTokens={changeChaosTokens}/>
+      ));
+    });
+
+    React.useEffect(() => {
+      console.log("Keys are",Object.keys(chaosContents));
+      console.log("elder sign is",chaosContents['Eldersign'])
+    },[])
+
+
+
+
+
     return (
         <main className="container-fluid bg-secondary">
         <div className="container bg-light align-items-center">
@@ -55,24 +76,24 @@ export function ChaosBag({userId,chaosContents,theme}) {
                       <div className="modal-body">
                         <div className="col-sm">
                             {/* addTokenAndIncrement */}
-                          <Token tokenName={'Eldersign'} />
-                          <Token tokenName={'Autofail'} />
-                          <Token tokenName={1} />
-                          <Token tokenName={0} />
-                          <Token tokenName={'minus1'} />
-                          <Token tokenName={'minus2'} />
-                          <Token tokenName={'minus3'} />
-                          <Token tokenName={'minus4'} />
-                          <Token tokenName={'minus5'} />
-                          <Token tokenName={'minus6'} />
-                          <Token tokenName={'minus7'} />
-                          <Token tokenName={'minus8'} />
-                          <Token tokenName={'skull'} />
-                          <Token tokenName={'cultist'} />
-                          <Token tokenName={'tablet'} />
-                          <Token tokenName={'elderthing'} />
-                          <Token tokenName={'bless'} />
-                          <Token tokenName={'curse'} />
+                          <Token tokenName={'Eldersign'} addTokens={changeChaosTokens}/>
+                          <Token tokenName={'Autofail'} addTokens={changeChaosTokens}/>
+                          <Token tokenName={1} addTokens={changeChaosTokens}/>
+                          <Token tokenName={0} addTokens={changeChaosTokens}/>
+                          <Token tokenName={'minus1'} addTokens={changeChaosTokens}/>
+                          <Token tokenName={'minus2'} addTokens={changeChaosTokens}/>
+                          <Token tokenName={'minus3'} addTokens={changeChaosTokens}/>
+                          <Token tokenName={'minus4'} addTokens={changeChaosTokens}/>
+                          <Token tokenName={'minus5'} addTokens={changeChaosTokens}/>
+                          <Token tokenName={'minus6'} addTokens={changeChaosTokens}/>
+                          <Token tokenName={'minus7'} addTokens={changeChaosTokens}/>
+                          <Token tokenName={'minus8'} addTokens={changeChaosTokens}/>
+                          <Token tokenName={'skull'} addTokens={changeChaosTokens}/>
+                          <Token tokenName={'cultist'} addTokens={changeChaosTokens}/>
+                          <Token tokenName={'tablet'} addTokens={changeChaosTokens}/>
+                          <Token tokenName={'elderthing'} addTokens={changeChaosTokens}/>
+                          <Token tokenName={'bless'} addTokens={changeChaosTokens}/>
+                          <Token tokenName={'curse'} addTokens={changeChaosTokens}/>
                         </div>
                       </div>
                     </div>
