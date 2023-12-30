@@ -6,6 +6,8 @@ import { Button } from 'react-bootstrap';
 export function ChaosBag({userId,chaosContents,theme, onChaosChange}) {
   const [tokenComponents, setTokenComponents] = React.useState([]);
   const [animationInProgress, setAnimationInProgress] = React.useState(false);
+  const [selectedToken, setSelectedToken] = React.useState(null);
+  const [showToken, setShowToken] = React.useState(false);
 
     const handImagePath = `helper-assets/Themes/${theme}/Grab.png`;
 
@@ -24,33 +26,37 @@ export function ChaosBag({userId,chaosContents,theme, onChaosChange}) {
     // if (oldPulledToken) {
     //     oldPulledToken.remove();
     // }
-    
-    // Get a random token from chaosContents
-    const tokenNames = Object.keys(chaosContents);
-    const randomTokenName = tokenNames[Math.floor(Math.random() * tokenNames.length)];
-    const randomQuantity = chaosContents[randomTokenName];
+
+    const tokensArray = Object.entries(chaosContents).flatMap(([token, count]) => Array.from({ length: count }, () => token));
+    console.log("Tokens pulling from are",tokensArray)
+    const randomIndex = Math.floor(Math.random() * tokensArray.length);
+    console.log("Selected Token is",tokensArray[randomIndex])
+    setSelectedToken(tokensArray[randomIndex])
+
 
     // After moving down, move the hand back up
-    setTimeout(function () {
-        hand.style.transition = 'transform 2s ease-in-out';
-        hand.style.transform = 'translateY(0)';
+    // setTimeout(function () {
+    //     // hand.style.transition = 'transform 2s ease-in-out';
+    //     // hand.style.transform = 'translateY(0)';
 
-        // Move the pulled token along with the hand
-        pulledToken.style.visibility = "visible"; // Show the pulled token
-        pulledToken.style.transition = "transform 2s ease-in-out, opacity 2s ease-in-out"; // CSS transition for transform and opacity
-        pulledToken.style.transform = "translateY(0)";
-        pulledToken.style.opacity = "1"; // Set opacity to 1 to gradually reveal the token
-        // pulledToken.style.transition = 'transform 2s ease-in-out';
-        // pulledToken.style.transform = 'translateY(0)';
-    }, 2000); // Adjust this timing to sync with the hand's animation
+    //     // // Move the pulled token along with the hand
+    //     // pulledToken.style.visibility = "visible"; // Show the pulled token
+    //     // pulledToken.style.transition = "transform 2s ease-in-out, opacity 2s ease-in-out"; // CSS transition for transform and opacity
+    //     // pulledToken.style.transform = "translateY(0)";
+    //     // pulledToken.style.opacity = "1"; // Set opacity to 1 to gradually reveal the token
+    //     // pulledToken.style.transition = 'transform 2s ease-in-out';
+    //     // pulledToken.style.transform = 'translateY(0)';
+    // }, 2000); // Adjust this timing to sync with the hand's animation
 
     // Reset animation state
     setTimeout(function () {
         setAnimationInProgress(false);
-    }, 4000); // Total duration of both up and down animation
+        // setSelectedToken(null)
+        setShowToken(true);
+    }, 2000); // Total duration of both up and down animation
     }
 
-    const changeChaosTokens = (tokenName, choice) => {
+  const changeChaosTokens = (tokenName, choice) => {
       const updatedChaosContents = { ...chaosContents };
   
       if (choice === "add") {
@@ -85,13 +91,18 @@ export function ChaosBag({userId,chaosContents,theme, onChaosChange}) {
 
           <div className="row">
             <div className="col-lg text-center hand">
-              <img className="meme" src={handImagePath} />
+              <img className={`meme ${animationInProgress ? 'animate-hand' : ''}`} src={handImagePath} />
             </div>  
           </div>
 
           <div className="row align-items-center text-center">
-            <div className="col-sm token-spot">
-              <img className="token pulled" src="helper-assets/Chaos Bag/0.png" />
+              <div className="col-sm token-spot">
+              {/* Display the token with fade-in animation */}
+              {selectedToken && (
+                <div className={`pulled ${showToken ? 'fade-in' : 'pulled'}`}>
+                  <Token className="token pulled" tokenName={selectedToken} />
+                </div>
+              )}
             </div>
           </div>
           <div className="row align-items-center text-center">

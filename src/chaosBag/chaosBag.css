@@ -1,6 +1,7 @@
 .meme {
     width: 75%;
     max-width: 350px;
+    transition: transform 2s ease-in-out;
   }
 
   .token {
@@ -8,8 +9,34 @@
     max-width: 70px;
   }
 
-  .pulled {
-    transform: translate(0%, 125%);
+  /* .pulled {
     visibility: hidden;
     opacity: 0;
+  } */
+
+  .animate-token-visible {
+    /* Define animation properties when token visibility changes */
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+  }
+  
+  .animate-token-translate {
+    /* Define animation properties when token translates */
+    transition: transform 2s ease-in-out;
+  }
+  
+  /* Animate the token translation when .animate-token-translate class is applied */
+  .token.animate-token-translate {
+    /* Define animation properties when animationInProgress is true */
+    transform: translateY(0); /* Example translation */
+  }
+
+  .pulled {
+    opacity: 0;
+    transition: opacity .5s ease-in-out;
+  }
+  
+  .pulled.fade-in {
+    opacity: 1;
   }
