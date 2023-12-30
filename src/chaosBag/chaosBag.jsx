@@ -1,44 +1,85 @@
 import React from 'react';
 import './chaosBag.css';
 import { Token } from './token';
+import { Button } from 'react-bootstrap';
 
 export function ChaosBag({userId,chaosContents,theme, onChaosChange}) {
+  const [tokenComponents, setTokenComponents] = React.useState([]);
+  const [animationInProgress, setAnimationInProgress] = React.useState(false);
+
     const handImagePath = `helper-assets/Themes/${theme}/Grab.png`;
-    const changeChaosTokens = (tokenName, choice) => {
-      console.log("Token name is",tokenName,"number is",chaosContents[tokenName])
-      if (choice === "add") {
-        chaosContents[tokenName] += 1;
-      } else if(choice === "remove") {
-        chaosContents[tokenName] -= 1;
+
+    const pullToken = () => {
+      if (animationInProgress) {
+        return;
       }
-      console.log("Token name is",tokenName,"number is now",chaosContents[tokenName])
-      onChaosChange(chaosContents);
+      if (Object.keys(chaosContents).length === 0) {
+        // Check if chaosContents is empty
+        alert("Error: Token bag empty. Add a token to the bag before pulling a token.");
+        return;
+      }
+      setAnimationInProgress(true);
+    // Remove old token and create new invisible one
+    // const oldPulledToken = document.querySelector('.pulled');
+    // if (oldPulledToken) {
+    //     oldPulledToken.remove();
+    // }
+    
+    // Get a random token from chaosContents
+    const tokenNames = Object.keys(chaosContents);
+    const randomTokenName = tokenNames[Math.floor(Math.random() * tokenNames.length)];
+    const randomQuantity = chaosContents[randomTokenName];
+
+    // After moving down, move the hand back up
+    setTimeout(function () {
+        hand.style.transition = 'transform 2s ease-in-out';
+        hand.style.transform = 'translateY(0)';
+
+        // Move the pulled token along with the hand
+        pulledToken.style.visibility = "visible"; // Show the pulled token
+        pulledToken.style.transition = "transform 2s ease-in-out, opacity 2s ease-in-out"; // CSS transition for transform and opacity
+        pulledToken.style.transform = "translateY(0)";
+        pulledToken.style.opacity = "1"; // Set opacity to 1 to gradually reveal the token
+        // pulledToken.style.transition = 'transform 2s ease-in-out';
+        // pulledToken.style.transform = 'translateY(0)';
+    }, 2000); // Adjust this timing to sync with the hand's animation
+
+    // Reset animation state
+    setTimeout(function () {
+        setAnimationInProgress(false);
+    }, 4000); // Total duration of both up and down animation
     }
 
-    const tokenComponents = Object.keys(chaosContents).flatMap(tokenName => {
-      const quantity = chaosContents[tokenName];
-      console.log("Using basic")
-      return Array.from({ length: quantity }, (_, index) => (
-        <Token key={`${tokenName}-${index}`} tokenName={tokenName} removeTokens={changeChaosTokens}/>
-      ));
-    });
+    const changeChaosTokens = (tokenName, choice) => {
+      const updatedChaosContents = { ...chaosContents };
+  
+      if (choice === "add") {
+        updatedChaosContents[tokenName] += 1;
+      } else if (choice === "remove") {
+        updatedChaosContents[tokenName] -= 1;
+      }
+  
+      onChaosChange(updatedChaosContents);
+    };
 
     React.useEffect(() => {
-      console.log("Keys are",Object.keys(chaosContents));
-      console.log("elder sign is",chaosContents['Eldersign'])
-    },[])
-
-
-
-
+      const updatedTokenComponents = Object.keys(chaosContents).flatMap(tokenName => {
+        const quantity = chaosContents[tokenName];
+        return Array.from({ length: quantity }, (_, index) => (
+          <Token key={`${tokenName}-${index}`} tokenName={tokenName} removeTokens={changeChaosTokens} />
+        ));
+      });
+  
+      setTokenComponents(updatedTokenComponents);
+    }, [chaosContents]);
 
     return (
         <main className="container-fluid bg-secondary">
         <div className="container bg-light align-items-center">
           <div className="row">
             <div className="col-lg text-center pull">
-                {/* onclick=pullToken() */}
-              <button type="button" className="btn btn-success btn-lg" id="pulltoken">Pull a token</button>
+              <br />
+              <Button className="btn btn-success btn-lg" onClick={pullToken}>Pull a token</Button>
             </div>
           </div>
 
@@ -71,7 +112,7 @@ export function ChaosBag({userId,chaosContents,theme, onChaosChange}) {
                     <div className="modal-content">
                       <div className="modal-header">
                         <h1 className="modal-title fs-5" id="exampleModalLabel">Select a token</h1>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <Button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></Button>
                       </div>
                       <div className="modal-body">
                         <div className="col-sm">
@@ -108,7 +149,7 @@ export function ChaosBag({userId,chaosContents,theme, onChaosChange}) {
               <div className="col-sm bag">
                 {tokenComponents}
               </div>
-      </div>
+            </div>
       <br />
     </div>
 
